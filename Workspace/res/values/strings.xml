@@ -3,6 +3,11 @@
 
     <string name="app_name">TINF13AIBI-App-TM</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="takePhoto">Foto aufnehmen</string>
+    <string name="title_activity_image">ImageActivity</string>
+    <string name="sendAsMail">Als E-Mail senden</string>
+    <string name="showOnMap">Standort anzeigen</string>
+    <string name="saveInLibrary">In Bildergalerie speichern</string>
 
 </resources>

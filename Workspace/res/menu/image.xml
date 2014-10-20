@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.tinf13aibi_app_tm.ImageActivity" >
+
+    <item
+        android:id="@+id/sendAsMail"
+        android:icon="@drawable/ic_action_email"
+        android:title="@string/sendAsMail"
+        app:showAsAction="withText"/>
+    <item
+        android:id="@+id/showOnMap"
+        android:icon="@drawable/ic_action_map"
+        android:title="@string/showOnMap"
+        app:showAsAction="withText"/>
+    <item
+        android:id="@+id/saveInLibrary"
+        android:icon="@drawable/ic_action_save"
+        android:title="@string/saveInLibrary"
+        app:showAsAction="withText"/>
+
+</menu>
