@@ -10,3 +10,4 @@ hs_err_pid*
 appcompat_v7/
 Workspace/gen/android/support/v7/appcompat/
 Workspace/bin/jarlist.cache
+*.~vsdx
