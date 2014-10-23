@@ -21,7 +21,7 @@ public class PhotoList {
 		adapter.add(photo);
 	}
 	
-	public void loadPhotos() {
+	public void loadPhotoData() {
 		//has jet to be done.
 	}
 }
