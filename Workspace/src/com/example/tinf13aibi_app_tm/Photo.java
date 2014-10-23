@@ -31,5 +31,13 @@ public class Photo {
 	public long getId() {
 		return id;
 	}
-	
+
+	@Override
+	public String toString() {
+		
+		return "id: " + id + "\n" +
+			   "date: " + date + "\n" +
+			   "time: " + time + "\n" +
+			   "location: " + location + "\n";
+	}
 }
