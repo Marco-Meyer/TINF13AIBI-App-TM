@@ -7,34 +7,50 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 
 import com.thoughtworks.xstream.XStream;
 
 public class SaveManager {
 	//fixed location we want to save our xml-files / pictures. Might a bit too inflexible..
-	private String directory = "";
+	private String photoDir;
+	private String xmlDir;
 	private XStream xstream; //xstream is a lib able to convert entire classes to xml and vice versa. Convenient, isn't it?
 	
-	public SaveManager(String directory) {
-		this.directory = directory;
+	public SaveManager(String[] directories) {
+		this.photoDir = directories[0];
+		this.xmlDir = directories[1];
 		xstream = new XStream();
 		xstream.alias("Photo", Photo.class);
 	}
 	
+	public void saveEntirePictureData(Photo photo, Bitmap picture) {
+		savePictureInDir(photo.getId(), picture);
+		savePictureMetaDataInXml(photo);
+	}
 	
-	public void savePictureInDir(long pictureId, Bitmap picture) {
+	public List<Photo> loadEntirePictureData() {
+		File directory = new File(xmlDir);
+		File[] fileList = directory.listFiles();
+		ArrayList<Photo> photoList = new ArrayList<Photo>(); 
+		for (File file : fileList) {
+			photoList.add(loadPictureMetaDataFromXml(file));
+		}
+		
+		return photoList;
+	}
+	
+	private void savePictureInDir(String pictureId, Bitmap picture) {
 	try{
 		
     	if(picture != null)
         {
-			String fileName = "Photo_" + String.valueOf(pictureId) + ".jpg";
+			String fileName = "Photo_" + pictureId + ".jpg";
     	    
-			File mediaFile = new File(directory,fileName);  
+			File mediaFile = new File(photoDir, fileName);  
     	    
 			FileOutputStream fOut = new FileOutputStream(mediaFile);
     	    picture.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
@@ -44,31 +60,31 @@ public class SaveManager {
 	}
 		catch(Exception e)
 	    {
-	    	
+			e.printStackTrace();
 	    }
 	}
 	
-	public void savePictureMetaDataInXml(Photo photo) {
+	private  void savePictureMetaDataInXml(Photo photo) {
 		 String xml = xstream.toXML(photo);
 		 System.out.println(xml);
 		 writeXmlToFile(photo.getId(), xml);
 	}
 	
-	public Photo loadPictureMetaDataFromXml(String pictureId) {
-		return (Photo) xstream.fromXML(getFileWithId(pictureId)); 
+	public Photo loadPictureMetaDataFromXml(File file) {
+		return (Photo) xstream.fromXML(file); 
 	}
 	
 	private void writeXmlToFile(String id, String xml) {
 		BufferedWriter writer = null;
 		try{
 		    BufferedReader reader = new BufferedReader(new StringReader("<?xml version=\"1.0\"?>\n" + xml));
-		    writer = new BufferedWriter(new FileWriter(getFileName(id), true));
+		    writer = new BufferedWriter(new FileWriter(getXmlFileName(id), true));
 		
 		    while ((xml = reader.readLine()) != null) {
 		
 		        writer.write(xml + System.getProperty("line.separator"));
 
-        }
+		    }
 		} catch (Exception e) {
 			System.err.println("Error in XML Write: " + e.getMessage());
 		} finally{
@@ -80,35 +96,16 @@ public class SaveManager {
 		        }
 		    }
 		}
-		//well... new File(StringToXml(xml)) maybe?..xD
-		/*FileOutputStream oStream = null;
-		try{            
-		    oStream = new FileOutputStream(getFileName(id));
-		    oStream.write("<?xml version=\"1.0\"?>".getBytes("UTF-8"));
-		    byte[] bytes = xml.getBytes("UTF-8");
-		    oStream.write(bytes);
-		
-		}catch (Exception e){
-		    System.err.println("Error in XML Write: " + e.getMessage());
-		}
-		finally{
-		    if(oStream != null){
-		        try{
-		            oStream.close();
-		        }catch (IOException e) {
-		            e.printStackTrace();
-		        }
-		    }
-		}*/
 	}
 	
+	@Deprecated
 	private File getFileWithId(String pictureId) {
 		// we have to search our dir and find the associated file here
-		return new File(getFileName(pictureId));
+		return new File(getXmlFileName(pictureId));
 	}
 	
-	private String getFileName(String id) {
-		return directory + "Photo_" + id + ".xml";
+	private String getXmlFileName(String id) {
+		return xmlDir + File.separator +  "Photo_" + id + ".xml";
 	}
 	
 	public static void main(String[] args) {

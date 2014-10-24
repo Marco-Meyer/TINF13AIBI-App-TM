@@ -23,12 +23,13 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
         setContentView(R.layout.activity_main);
-        this.list = new PhotoList(this, (ListView)findViewById(R.id.photo_list));
-        //old picture data should be loaded here.
-        list.loadPhotoData();
+        
+        this.list = new PhotoList(this, (ListView)findViewById(R.id.photo_list), getDirectories());
+        list.loadOldPhotoData();
     }
-
+    
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -57,16 +58,16 @@ public class MainActivity extends ActionBarActivity {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
 		    	Bitmap picture = (Bitmap) data.getExtras().get("data");
-		    	String mediaStorageDir = getDir("Photos", Context.MODE_PRIVATE).getAbsolutePath(); 
+		    	 
 				
 		    	Date currentDate = new Date();
 		    	Time currentTime = new Time(currentDate.getTime()); 
 				String pictureId = new SimpleDateFormat("yyyyMMdd_HHmmss").format(currentDate);
 				
-				Location location = new Location("");
+				String location = new String("");
 				
 		        Photo resultPhoto = new Photo(pictureId, currentDate, currentTime,  location);
-		        list.addPhoto(resultPhoto);
+		        list.addPhoto(resultPhoto, picture);
             }
        // } 	
             // Image captured and saved to fileUri specified in the Intent
@@ -79,6 +80,12 @@ public class MainActivity extends ActionBarActivity {
 
         	}
         }
+    private String[] getDirectories() {
+    	String photoDir = getDir("Photos", Context.MODE_PRIVATE).getAbsolutePath();
+        String xmlDir = getDir("XMLs", Context.MODE_PRIVATE).getAbsolutePath();
+        String[] directories = {photoDir, xmlDir};
+        return directories;
+    }
 }
     
 
