@@ -1,27 +1,19 @@
 package com.example.tinf13aibi_app_tm;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.sql.Time;
 
 import android.support.v7.app.ActionBarActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
+import android.location.Location;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import android.widget.Toast;
-
 import android.widget.ListView;
-
-
 
 public class MainActivity extends ActionBarActivity {
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
@@ -63,13 +55,19 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-            //if (resultCode == RESULT_OK) {
-        	Bitmap picture = (Bitmap) data.getExtras().get("data");
-        	String mediaStorageDir = getDir("Photos", Context.MODE_PRIVATE).getAbsolutePath(); 
-    		
-    		String pictureId = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-;
-	            	
+            if (resultCode == RESULT_OK) {
+		    	Bitmap picture = (Bitmap) data.getExtras().get("data");
+		    	String mediaStorageDir = getDir("Photos", Context.MODE_PRIVATE).getAbsolutePath(); 
+				
+		    	Date currentDate = new Date();
+		    	Time currentTime = new Time(currentDate.getTime()); 
+				String pictureId = new SimpleDateFormat("yyyyMMdd_HHmmss").format(currentDate);
+				
+				Location location = new Location("");
+				
+		        Photo resultPhoto = new Photo(pictureId, currentDate, currentTime,  location);
+		        list.addPhoto(resultPhoto);
+            }
        // } 	
             // Image captured and saved to fileUri specified in the Intent
            // } else if (resultCode == RESULT_CANCELED) {

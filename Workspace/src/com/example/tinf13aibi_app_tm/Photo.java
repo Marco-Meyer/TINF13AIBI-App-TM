@@ -1,34 +1,32 @@
 package com.example.tinf13aibi_app_tm;
 
+import java.sql.Time;
 import java.util.Date;
 
-import android.text.format.Time;
+import android.location.Location;
 
 public class Photo {
-	/* 
-	 * dummy implementation for this class to test xml-writing/reading of the savemanager.
-	 * We should think about reasonable data types of "date" and "time"..
-	*/
-	private long id;
-	private String date;
-	private String time;
-	private String location;
+
+	private String id;
+	private Date date;
+	private Time time;
+	private Location location;
 	
 	public Photo() {
-		this.id = 0;
-		this.date = "";
-		this.time = "";
-		this.location = "";
+		this.id = "";
+		this.date = new Date();
+		this.time = new Time(0);
+		this.location = new Location("");
 	}
 	
-	public Photo(long id, String date, String time, String location) {
+	public Photo(String id, Date date, Time time, Location location) {
 		this.id = id;
 		this.date = date;
 		this.time = time;
 		this.location = location;
 	}
 
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 

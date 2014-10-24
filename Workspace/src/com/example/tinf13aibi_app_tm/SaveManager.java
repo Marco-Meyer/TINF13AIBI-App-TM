@@ -54,11 +54,11 @@ public class SaveManager {
 		 writeXmlToFile(photo.getId(), xml);
 	}
 	
-	public Photo loadPictureMetaDataFromXml(long pictureId) {
+	public Photo loadPictureMetaDataFromXml(String pictureId) {
 		return (Photo) xstream.fromXML(getFileWithId(pictureId)); 
 	}
 	
-	private void writeXmlToFile(long id, String xml) {
+	private void writeXmlToFile(String id, String xml) {
 		BufferedWriter writer = null;
 		try{
 		    BufferedReader reader = new BufferedReader(new StringReader("<?xml version=\"1.0\"?>\n" + xml));
@@ -102,12 +102,12 @@ public class SaveManager {
 		}*/
 	}
 	
-	private File getFileWithId(long pictureId) {
+	private File getFileWithId(String pictureId) {
 		// we have to search our dir and find the associated file here
 		return new File(getFileName(pictureId));
 	}
 	
-	private String getFileName(long id) {
+	private String getFileName(String id) {
 		return directory + "Photo_" + id + ".xml";
 	}
 	
