@@ -11,3 +11,5 @@ appcompat_v7/
 Workspace/gen/android/support/v7/appcompat/
 Workspace/bin/jarlist.cache
 *.~vsdx
+Workspace/bin/
+Workspace/gen/

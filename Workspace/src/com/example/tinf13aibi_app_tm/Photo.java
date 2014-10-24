@@ -35,9 +35,7 @@ public class Photo {
 	@Override
 	public String toString() {
 		
-		return "id: " + id + "\n" +
-			   "date: " + date + "\n" +
-			   "time: " + time + "\n" +
-			   "location: " + location + "\n";
+		return "id: " + id  +
+			   " date: " + date;
 	}
 }

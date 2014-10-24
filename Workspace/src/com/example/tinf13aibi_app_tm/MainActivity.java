@@ -16,17 +16,25 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import android.widget.Toast;
+
+import android.widget.ListView;
 
 
 
 public class MainActivity extends ActionBarActivity {
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+	private PhotoList list;
+	
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.list = new PhotoList(this, (ListView)findViewById(R.id.photo_list));
+        //old picture data should be loaded here.
+        list.loadPhotoData();
     }
 
 
@@ -36,7 +44,6 @@ public class MainActivity extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
         //return super.onCreateOptionsMenu(menu);
-        
     }
 
     @Override
