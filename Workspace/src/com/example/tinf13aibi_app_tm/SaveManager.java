@@ -3,26 +3,50 @@ package com.example.tinf13aibi_app_tm;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import android.content.Context;
+import android.graphics.Bitmap;
 
 import com.thoughtworks.xstream.XStream;
 
 public class SaveManager {
 	//fixed location we want to save our xml-files / pictures. Might a bit too inflexible..
-	private static final String directory = "";
+	private String directory = "";
 	private XStream xstream; //xstream is a lib able to convert entire classes to xml and vice versa. Convenient, isn't it?
 	
-	public SaveManager() {
+	public SaveManager(String directory) {
+		this.directory = directory;
 		xstream = new XStream();
 		xstream.alias("Photo", Photo.class);
 	}
 	
 	
-	//public void savePictureInDir(long pictureId, Bitmap picture) {
+	public void savePictureInDir(long pictureId, Bitmap picture) {
+	try{
 		
-	//}
+    	if(picture != null)
+        {
+			String fileName = "Photo_" + String.valueOf(pictureId) + ".jpg";
+    	    
+			File mediaFile = new File(directory,fileName);  
+    	    
+			FileOutputStream fOut = new FileOutputStream(mediaFile);
+    	    picture.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
+    	    fOut.flush();
+    	    fOut.close(); 
+    	}
+	}
+		catch(Exception e)
+	    {
+	    	
+	    }
+	}
 	
 	public void savePictureMetaDataInXml(Photo photo) {
 		 String xml = xstream.toXML(photo);
@@ -88,11 +112,11 @@ public class SaveManager {
 	}
 	
 	public static void main(String[] args) {
-		Photo testphoto = new Photo(10, "today", "now", "here");
-		SaveManager sm = new SaveManager();
-		/*sm.savePictureMetaDataInXml(testphoto);*/
-		Photo testphoto2 = sm.loadPictureMetaDataFromXml(10);
-		System.out.println(testphoto2.toString());
+//		Photo testphoto = new Photo(10, "today", "now", "here");
+//		SaveManager sm = new SaveManager();
+//		/*sm.savePictureMetaDataInXml(testphoto);*/
+//		Photo testphoto2 = sm.loadPictureMetaDataFromXml(10);
+//		System.out.println(testphoto2.toString());
 		
 	}
 }

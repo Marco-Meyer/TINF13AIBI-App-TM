@@ -1,16 +1,27 @@
 package com.example.tinf13aibi_app_tm;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.support.v7.app.ActionBarActivity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
 
 
 public class MainActivity extends ActionBarActivity {
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +45,8 @@ public class MainActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
         if (id == R.id.takePhoto) {
-        	Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        	Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         	startActivityForResult(intent,CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
             return true;
         }
@@ -48,13 +56,31 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                // Image captured and saved to fileUri specified in the Intent
-            } else if (resultCode == RESULT_CANCELED) {
+            //if (resultCode == RESULT_OK) {
+        	Bitmap picture = (Bitmap) data.getExtras().get("data");
+        	String mediaStorageDir = getDir("Photos", Context.MODE_PRIVATE).getAbsolutePath(); 
+    		
+    		String pictureId = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+;
+	            	
+       // } 	
+            // Image captured and saved to fileUri specified in the Intent
+           // } else if (resultCode == RESULT_CANCELED) {
                 // User cancelled the image capture
-            } else {
+           // } else {
                 // Image capture failed, advise user
-            }
+            //}
+        //}
+
+        	}
         }
-    }
 }
+    
+
+
+
+
+
+
+
+
