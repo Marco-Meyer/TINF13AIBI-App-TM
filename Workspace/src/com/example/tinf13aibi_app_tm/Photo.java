@@ -34,7 +34,7 @@ public class Photo {
 	@Override
 	public String toString() {
 		
-		return "id: " + id  +
-			   " date: " + date;
+		return "Photo_" + id  + ".jpg \n" +
+			   "Date: " + date;
 	}
 }
