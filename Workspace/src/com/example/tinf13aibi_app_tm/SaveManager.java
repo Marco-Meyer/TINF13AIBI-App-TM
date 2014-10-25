@@ -33,12 +33,15 @@ public class SaveManager {
 	}
 	
 	public List<Photo> loadEntirePictureData() {
+		// what happens with broken xml-files? we may need a delete-routine here..somewhere.
 		File directory = new File(xmlDir);
 		File[] fileList = directory.listFiles();
-		ArrayList<Photo> photoList = new ArrayList<Photo>(); 
-		for (File file : fileList) {
-			photoList.add(loadPictureMetaDataFromXml(file));
-		}
+		ArrayList<Photo> photoList = new ArrayList<Photo>();
+		try {
+			for (File file : fileList) {
+				photoList.add(loadPictureMetaDataFromXml(file));
+			}
+		} catch (Exception e) {System.out.println("Excepion thrown during loading");}	
 		
 		return photoList;
 	}
@@ -100,7 +103,6 @@ public class SaveManager {
 	
 	@Deprecated
 	private File getFileWithId(String pictureId) {
-		// we have to search our dir and find the associated file here
 		return new File(getXmlFileName(pictureId));
 	}
 	

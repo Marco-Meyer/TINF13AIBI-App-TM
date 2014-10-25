@@ -25,7 +25,6 @@ public class PhotoList {
 	}
 	
 	public void loadOldPhotoData() {
-		//has jet to be done.
 		List<Photo> loadedPhotos = sm.loadEntirePictureData();
 		adapter.addAll(loadedPhotos);
 	}
