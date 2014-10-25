@@ -33,7 +33,7 @@ public class MainActivity extends ActionBarActivity {
         
         this.list = new PhotoList(this, (ListView)findViewById(R.id.photo_list), getDirectories());
         list.loadOldPhotoData();
-        
+        list.onClick();
         currentLocation = null;
         locManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         setLocationListener();
@@ -88,6 +88,7 @@ public class MainActivity extends ActionBarActivity {
     				
     		        Photo resultPhoto = new Photo(pictureId, currentDate, currentTime,  currentLocation);
     		        list.addPhoto(resultPhoto, picture);
+    		        list.onClick();
     		        Toast.makeText(this, "Photo added.", Toast.LENGTH_SHORT).show();
     		        break;
             	case RESULT_CANCELED:

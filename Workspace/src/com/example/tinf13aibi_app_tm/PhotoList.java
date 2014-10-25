@@ -3,9 +3,14 @@ package com.example.tinf13aibi_app_tm;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+import android.view.View;
 
 public class PhotoList {
 	private ListView list;
@@ -27,5 +32,18 @@ public class PhotoList {
 	public void loadOldPhotoData() {
 		List<Photo> loadedPhotos = sm.loadEntirePictureData();
 		adapter.addAll(loadedPhotos);
+	}
+	
+	public void onClick()
+	{
+		this.list.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position,
+					long id) {
+				Intent intent = new Intent(view.getContext(), ImageActivity.class);
+				view.getContext().startActivity(intent);
+//				Toast.makeText(view.getContext(),"You've got an event" + context,Toast.LENGTH_LONG).show();	
+			}
+	    });
 	}
 }
