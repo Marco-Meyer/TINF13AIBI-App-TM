@@ -28,7 +28,6 @@ public class MainActivity extends ActionBarActivity {
         
         this.list = new PhotoList(this, (ListView)findViewById(R.id.photo_list), getDirectories());
         list.loadOldPhotoData();
-        list.onClick();
     }
     
 
@@ -69,8 +68,6 @@ public class MainActivity extends ActionBarActivity {
 				
 		        Photo resultPhoto = new Photo(pictureId, currentDate, currentTime,  location);
 		        list.addPhoto(resultPhoto, picture);
-		        list.onClick();
-		    	
             }
        // } 	
             // Image captured and saved to fileUri specified in the Intent
@@ -89,10 +86,6 @@ public class MainActivity extends ActionBarActivity {
         String[] directories = {photoDir, xmlDir};
         return directories;
     }
-    
-    
-    
-    
 }
     
 

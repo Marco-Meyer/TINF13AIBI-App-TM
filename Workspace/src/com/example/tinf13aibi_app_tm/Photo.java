@@ -69,5 +69,6 @@ public class Photo {
 		return "Photo_" + id  + ".jpg \n" +
 			   "Date: " + getDate();
 
+
 	}
 }
