@@ -34,7 +34,7 @@ public class PhotoList {
 		adapter.addAll(loadedPhotos);
 	}
 	
-	public void onClick()
+	public void setOnClickListener()
 	{
 		this.list.setOnItemClickListener(new OnItemClickListener() {
 			@Override
