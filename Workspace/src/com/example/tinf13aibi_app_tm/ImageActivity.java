@@ -1,16 +1,25 @@
 package com.example.tinf13aibi_app_tm;
 
 import android.support.v7.app.ActionBarActivity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 public class ImageActivity extends ActionBarActivity {
-
+	private Photo photo;
+	private ImageView imgView;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_image);
+		this.photo = (Photo) getIntent().getSerializableExtra("com.example.tinf13aibi_app_tm.photo");
+		Toast.makeText(this, "photo is " + photo.getId(), Toast.LENGTH_LONG).show();
+		imgView = (ImageView) findViewById(R.id.imageView);
+		imgView.setImageBitmap((Bitmap) getIntent().getParcelableExtra("com.example.tinf13aibi_app_tm.picture"));
 	}
 
 	@Override

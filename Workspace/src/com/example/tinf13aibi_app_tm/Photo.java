@@ -1,11 +1,12 @@
 package com.example.tinf13aibi_app_tm;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
 
 import android.location.Location;
 
-public class Photo {
+public class Photo implements Serializable{
 
 	private String id;
 	private Date date;

@@ -3,6 +3,7 @@ package com.example.tinf13aibi_app_tm;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -47,25 +49,38 @@ public class SaveManager {
 	}
 	
 	private void savePictureInDir(String pictureId, Bitmap picture) {
-	try{
+		try{
 		
-    	if(picture != null)
-        {
-			String fileName = "Photo_" + pictureId + ".jpg";
-    	    
-			File mediaFile = new File(photoDir, fileName);  
-    	    
-			FileOutputStream fOut = new FileOutputStream(mediaFile);
-    	    picture.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
-    	    fOut.flush();
-    	    fOut.close(); 
-    	}
-	}
-		catch(Exception e)
-	    {
+	    	if(picture != null)
+	        {
+				String fileName = getPictureFileName(pictureId);
+	    	    
+				File mediaFile = new File(fileName);  
+	    	    
+				FileOutputStream fOut = new FileOutputStream(mediaFile);
+	    	    picture.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
+	    	    fOut.flush();
+	    	    fOut.close(); 
+	    	}
+		}
+		catch(Exception e) {
 			e.printStackTrace();
 	    }
 	}
+	
+	public Bitmap loadPictureWithId(String pictureId) {
+		Bitmap result = null;
+		try {
+			BitmapFactory.Options options = new BitmapFactory.Options();
+			options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+			result = BitmapFactory.decodeFile(getPictureFileName(pictureId), options);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	
 	
 	private  void savePictureMetaDataInXml(Photo photo) {
 		 String xml = xstream.toXML(photo);
@@ -101,9 +116,8 @@ public class SaveManager {
 		}
 	}
 	
-	@Deprecated
-	private File getFileWithId(String pictureId) {
-		return new File(getXmlFileName(pictureId));
+	private String getPictureFileName(String id) {
+		return photoDir + File.separator + "Photo_" + id + ".jpg";
 	}
 	
 	private String getXmlFileName(String id) {

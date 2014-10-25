@@ -40,7 +40,11 @@ public class PhotoList {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position,
 					long id) {
+				
+				Photo currentPhoto = adapter.getItem(position);
 				Intent intent = new Intent(view.getContext(), ImageActivity.class);
+				intent.putExtra("com.example.tinf13aibi_app_tm.photo" , currentPhoto);
+				intent.putExtra("com.example.tinf13aibi_app_tm.picture", sm.loadPictureWithId(currentPhoto.getId()));
 				view.getContext().startActivity(intent);
 //				Toast.makeText(view.getContext(),"You've got an event" + context,Toast.LENGTH_LONG).show();	
 			}
