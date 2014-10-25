@@ -3,6 +3,7 @@ package com.example.tinf13aibi_app_tm;
 import android.support.v7.app.ActionBarActivity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 public class ImageActivity extends ActionBarActivity {
 	private Photo photo;
 	private ImageView imgView;
+	private Bitmap currentPicture;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +21,8 @@ public class ImageActivity extends ActionBarActivity {
 		this.photo = (Photo) getIntent().getSerializableExtra("com.example.tinf13aibi_app_tm.photo");
 		Toast.makeText(this, "photo is " + photo.getId(), Toast.LENGTH_LONG).show();
 		imgView = (ImageView) findViewById(R.id.imageView);
-		imgView.setImageBitmap((Bitmap) getIntent().getParcelableExtra("com.example.tinf13aibi_app_tm.picture"));
+		currentPicture = (Bitmap) getIntent().getParcelableExtra("com.example.tinf13aibi_app_tm.picture");
+		imgView.setImageBitmap(currentPicture);
 	}
 
 	@Override
@@ -42,6 +45,8 @@ public class ImageActivity extends ActionBarActivity {
 			return true;
 		}
 		if (id == R.id.saveInLibrary) {
+			MediaStore.Images.Media.insertImage(getContentResolver(), currentPicture, photo.getId() , "");
+			Toast.makeText(this, "Bild in der Bildergalerie gespeichert", Toast.LENGTH_SHORT).show()	;
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
