@@ -19,8 +19,15 @@ public class MainActivity extends ActionBarActivity {
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	private PhotoList list;
 	
-
-    @Override
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		list.loadOldPhotoData();
+        list.onClick();
+	}
+    
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
@@ -89,17 +96,7 @@ public class MainActivity extends ActionBarActivity {
         String[] directories = {photoDir, xmlDir};
         return directories;
     }
-    
-    
-    
+
     
 }
     
-
-
-
-
-
-
-
-
