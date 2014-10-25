@@ -1,7 +1,7 @@
 Todo:
 
-* GPS Daten beim Speichern des Bildes bestimmen und weiterleiten MMy
-* imageActivity beim klicken der ListView anzeigen und Photodaten übergeben + Photo anzeigen TKi (? sah im commit danach aus. xD)
+* GPS Daten beim Speichern des Bildes bestimmen und weiterleiten TKi
+* Imageactivity: Photodaten übergeben + Photo anzeigen MMy
 * imageactivity: E-Mail mit aktuellem Photo versenden
 * imageactivity: Position auf Map anzeigen
 * imageactivity: Bild in der Bibliothek speichern
@@ -10,6 +10,8 @@ Todo:
 	* Option anfügen, dass lokale Daten gelöscht werden.
 
 
+Done
+* imageActivity beim klicken der ListView anzeigen 	
 
 
 zurückgestellt:
