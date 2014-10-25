@@ -1,0 +1,20 @@
+Todo:
+
+* GPS Daten beim Speichern des Bildes bestimmen und weiterleiten MMy
+* imageActivity beim klicken der ListView anzeigen und Photodaten übergeben + Photo anzeigen TKi (? sah im commit danach aus. xD)
+* imageactivity: E-Mail mit aktuellem Photo versenden
+* imageactivity: Position auf Map anzeigen
+* imageactivity: Bild in der Bibliothek speichern
+
+* Programmrobustheit: Was passiert bei fehlerhaften xml?
+	* Option anfügen, dass lokale Daten gelöscht werden.
+
+
+
+
+zurückgestellt:
+
+* Neuinitialisierung der App verhindern beim Rotieren des Geräts (evtl nicht notwendig?)
+* imageactivity: löschen des aktuellen bildes ermöglichen
+* Beim Speichern Namensvergabe des Bildes ermöglichen (sinnvoll?)
+	* Prüflogik um doppelte Namen zu vermeiden.
