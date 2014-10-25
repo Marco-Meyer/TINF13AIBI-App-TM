@@ -65,7 +65,7 @@ public class MainActivity extends ActionBarActivity {
 		    	Time currentTime = new Time(currentDate.getTime()); 
 				String pictureId = new SimpleDateFormat("yyyyMMdd_HHmmss").format(currentDate);
 				
-				String location = new String("");
+				Location location = new Location("");
 				
 		        Photo resultPhoto = new Photo(pictureId, currentDate, currentTime,  location);
 		        list.addPhoto(resultPhoto, picture);
