@@ -44,6 +44,9 @@ public class MainActivity extends ActionBarActivity {
 		super.onStart();
 		if (locationProviderExists()) {
 			locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 0, locListener);
+		}else
+		{
+			locManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3000, 0, locListener);
 		}
 	}
 
