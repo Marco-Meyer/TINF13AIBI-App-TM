@@ -35,6 +35,7 @@ public class MainActivity extends ActionBarActivity {
         list.loadOldPhotoData();
         list.setOnClickListener();
         currentLocation = null;
+        Toast.makeText(this,"GPS coordinates aren´t available. Please wait a moment",Toast.LENGTH_LONG).show();
         locManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         setLocationListener();
     }
@@ -119,7 +120,8 @@ public class MainActivity extends ActionBarActivity {
 
 			@Override
 			public void onLocationChanged(Location location) {
-				currentLocation = location; 
+				currentLocation = location;
+				Toast.makeText(MainActivity.this,"You can take a photo. GPS coordinates are available",Toast.LENGTH_SHORT).show();
 			}
 
 			@Override

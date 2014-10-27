@@ -44,6 +44,8 @@ public class ImageActivity extends ActionBarActivity {
 		}
 		if (id == R.id.showOnMap) {
 			Intent intent = new Intent(ImageActivity.this,GoogleMapsActivity.class);
+			intent.putExtra("com.example.tinf13aibi_app_tm.photoLongitude",photo.getLongitude());
+			intent.putExtra("com.example.tinf13aibi_app_tm.photoLatitude",photo.getLatitude());
 			startActivity(intent);
 			return true;
 		}
