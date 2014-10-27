@@ -3,17 +3,28 @@
     package="com.example.tinf13aibi_app_tm"
     android:versionCode="1"
     android:versionName="1.0" >
+
+    <permission
+        android:name="com.example.tinf13aibi_app_tm.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.example.tinf13aibi_app_tm.permission.MAPS_RECEIVE" />
 	
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-feature android:name="android.hardware.camera" />
+	<uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true"/>
     
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-feature android:name="android.hardware.camera" />
+
     <uses-sdk
-        android:minSdkVersion="11"
+        android:minSdkVersion="16"
         android:targetSdkVersion="21" />
 
     <application
@@ -38,14 +49,24 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.tinf13aibi_app_tm.MainActivity" />
         </activity>
-        <meta-data android:name="com.google.android.gms.version"
-        android:value="@integer/google_play_services_version" />
-        <meta-data android:name="com.google.android.maps.v2.API_KEY"
-    	android:value="AIzaSyD1tO_UMiTYe881RPpwnuDgy3X8PViWXVw"/>
-        
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyD1tO_UMiTYe881RPpwnuDgy3X8PViWXVw" />
+
         <uses-library android:name="com.google.android.maps" />
-        
-        
+
+        <activity
+            android:name=".GoogleMapsActivity"
+            android:label="@string/title_activity_google_maps"
+            android:parentActivityName=".ImageActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.tinf13aibi_app_tm.ImageActivity" />
+        </activity>
     </application>
 
 </manifest>

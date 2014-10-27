@@ -1,6 +1,7 @@
 package com.example.tinf13aibi_app_tm;
 
 import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -42,6 +43,8 @@ public class ImageActivity extends ActionBarActivity {
 			return true;
 		}
 		if (id == R.id.showOnMap) {
+			Intent intent = new Intent(ImageActivity.this,GoogleMapsActivity.class);
+			startActivity(intent);
 			return true;
 		}
 		if (id == R.id.saveInLibrary) {

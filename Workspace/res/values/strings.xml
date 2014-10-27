@@ -9,5 +9,6 @@
     <string name="sendAsMail">Als E-Mail senden</string>
     <string name="showOnMap">Standort anzeigen</string>
     <string name="saveInLibrary">In Bildergalerie speichern</string>
+    <string name="title_activity_google_maps">GoogleMapsActivity</string>
 
 </resources>
