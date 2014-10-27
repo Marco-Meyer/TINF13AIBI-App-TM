@@ -1,17 +1,17 @@
 Todo:
 
-* GPS Daten beim Speichern des Bildes bestimmen und weiterleiten TKi
-* Imageactivity: Photodaten übergeben + Photo anzeigen MMy
 * imageactivity: E-Mail mit aktuellem Photo versenden
-* imageactivity: Position auf Map anzeigen
-* imageactivity: Bild in der Bibliothek speichern
 
 * Programmrobustheit: Was passiert bei fehlerhaften xml?
 	* Option anfügen, dass lokale Daten gelöscht werden.
 
 
 Done
-* imageActivity beim klicken der ListView anzeigen 	
+* imageActivity beim klicken der ListView anzeigen 
+* GPS Daten beim Speichern des Bildes bestimmen und weiterleiten
+* Imageactivity: Photodaten übergeben + Photo anzeigen MMy
+* imageactivity: Bild in der Bibliothek speichern
+* imageactivity: Position auf Map anzeigen	
 
 
 zurückgestellt:
