@@ -19,12 +19,14 @@ public class ImageActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_image);
+
 		this.photo = (Photo) getIntent().getSerializableExtra("com.example.tinf13aibi_app_tm.photo");
 		Toast.makeText(this, "photo is " + photo.getId(), Toast.LENGTH_LONG).show();
 		imgView = (ImageView) findViewById(R.id.imageView);
 		currentPicture = (Bitmap) getIntent().getParcelableExtra("com.example.tinf13aibi_app_tm.picture");
 		imgView.setImageBitmap(currentPicture);
 	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -43,15 +45,23 @@ public class ImageActivity extends ActionBarActivity {
 			return true;
 		}
 		if (id == R.id.showOnMap) {
-			Intent intent = new Intent(ImageActivity.this,GoogleMapsActivity.class);
-			intent.putExtra("com.example.tinf13aibi_app_tm.photoLongitude",photo.getLongitude());
-			intent.putExtra("com.example.tinf13aibi_app_tm.photoLatitude",photo.getLatitude());
-			startActivity(intent);
+			
+			if(photo.getLongitude() == 0.0 && photo.getLatitude() == 0.0)
+			{
+				Toast.makeText(ImageActivity.this,"No Location registered.",Toast.LENGTH_SHORT).show();
+			}else
+			{
+				Intent intent = new Intent(ImageActivity.this,GoogleMapsActivity.class);
+				intent.putExtra("com.example.tinf13aibi_app_tm.photoLongitude",photo.getLongitude());
+				intent.putExtra("com.example.tinf13aibi_app_tm.photoLatitude",photo.getLatitude());
+				intent.putExtra("com.example.tinf13aibi_app_tm.photoId" , photo.getId());
+				startActivity(intent);
+			}
 			return true;
 		}
 		if (id == R.id.saveInLibrary) {
 			MediaStore.Images.Media.insertImage(getContentResolver(), currentPicture, photo.getId() , "");
-			Toast.makeText(this, "Bild in der Bildergalerie gespeichert", Toast.LENGTH_SHORT).show()	;
+			Toast.makeText(this, "Picture saved to gallery", Toast.LENGTH_SHORT).show()	;
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

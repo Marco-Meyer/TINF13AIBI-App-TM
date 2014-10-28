@@ -1,13 +1,17 @@
 package com.example.tinf13aibi_app_tm;
 
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 //import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 
 import android.support.v7.app.ActionBarActivity;
+//import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +21,8 @@ public class GoogleMapsActivity extends ActionBarActivity {
 	private GoogleMap map;
 	private double longitude;
 	private double latitude;
+	private String pictureId;
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,14 +30,23 @@ public class GoogleMapsActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_google_maps);
 		
 		this.longitude = (double)getIntent().getDoubleExtra("com.example.tinf13aibi_app_tm.photoLongitude", 0.0);
-		System.out.println(longitude);
 		this.latitude = (double)getIntent().getDoubleExtra("com.example.tinf13aibi_app_tm.photoLatitude", 0.0);
-		 
+		this.pictureId = (String)getIntent().getStringExtra("com.example.tinf13aibi_app_tm.photoId");
+				 
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		final SupportMapFragment mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map);
 		map = mapFragment.getMap();
+		map.setMyLocationEnabled(true);
 		map.addMarker(new MarkerOptions()
-         .position(new LatLng(latitude, longitude)));
+         .position(new LatLng(latitude, longitude))
+         .title("Photo_"+ pictureId + ".jpg"));
+		
+		CameraPosition cameraPosition = new CameraPosition.Builder()
+	    .target(new LatLng(latitude, longitude))
+	    .zoom(10)
+	    .build();                   
+		map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
 
 	}
 
@@ -54,9 +69,7 @@ public class GoogleMapsActivity extends ActionBarActivity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
+
 		return super.onOptionsItemSelected(item);
 	}
 

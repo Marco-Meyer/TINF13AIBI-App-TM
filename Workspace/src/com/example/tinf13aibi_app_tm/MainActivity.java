@@ -34,8 +34,9 @@ public class MainActivity extends ActionBarActivity {
         this.list = new PhotoList(this, (ListView)findViewById(R.id.photo_list), getDirectories());
         list.loadOldPhotoData();
         list.setOnClickListener();
+        list.setOnLongClickListener();
         currentLocation = null;
-        Toast.makeText(this,"GPS coordinates aren´t available. Please wait a moment",Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"No actual GPS coordinates.\nPlease wait...",Toast.LENGTH_SHORT).show();
         locManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         setLocationListener();
     }
@@ -44,10 +45,10 @@ public class MainActivity extends ActionBarActivity {
 	protected void onStart() {
 		super.onStart();
 		if (locationProviderExists()) {
-			locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 0, locListener);
+			locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locListener);
 		}else
 		{
-			locManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3000, 0, locListener);
+			locManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, locListener);
 		}
 	}
 
@@ -56,6 +57,12 @@ public class MainActivity extends ActionBarActivity {
 		super.onPause();
 		locManager.removeUpdates(locListener);
 	}
+	
+//	@Override
+//	protected void onStop() {
+//		super.onStop();
+//		locManager.removeUpdates(locListener);
+//	}
 
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -76,6 +83,11 @@ public class MainActivity extends ActionBarActivity {
         	startActivityForResult(intent,CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
             return true;
         }
+        if (id == R.id.deletePhotos) {
+        	list.deleteAllPhotos();
+        	Toast.makeText(MainActivity.this,"All Photos deleted.",Toast.LENGTH_SHORT).show();
+        	return true;
+        }
         return super.onOptionsItemSelected(item);
     }
     
@@ -89,8 +101,9 @@ public class MainActivity extends ActionBarActivity {
     		    	Date currentDate = new Date();
     		    	Time currentTime = new Time(currentDate.getTime()); 
     				String pictureId = new SimpleDateFormat("yyyyMMdd_HHmmss").format(currentDate);
-    				
-    		        Photo resultPhoto = new Photo(pictureId, currentDate, currentTime,  currentLocation);
+    				//currentLocation = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+    		        
+    				Photo resultPhoto = new Photo(pictureId, currentDate, currentTime,  currentLocation);
     		        list.addPhoto(resultPhoto, picture);
     		        Toast.makeText(this, "Photo added.", Toast.LENGTH_SHORT).show();
     		        break;
@@ -121,7 +134,8 @@ public class MainActivity extends ActionBarActivity {
 			@Override
 			public void onLocationChanged(Location location) {
 				currentLocation = location;
-				Toast.makeText(MainActivity.this,"You can take a photo. GPS coordinates are available",Toast.LENGTH_SHORT).show();
+				System.out.println(currentLocation.getLongitude());
+				Toast.makeText(MainActivity.this,"GPS coordinates are available",Toast.LENGTH_SHORT).show();
 			}
 
 			@Override

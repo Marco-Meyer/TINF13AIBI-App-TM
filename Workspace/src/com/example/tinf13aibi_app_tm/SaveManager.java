@@ -34,6 +34,7 @@ public class SaveManager {
 		savePictureMetaDataInXml(photo);
 	}
 	
+
 	public List<Photo> loadEntirePictureData() {
 		// what happens with broken xml-files? we may need a delete-routine here..somewhere.
 		File directory = new File(xmlDir);
@@ -55,10 +56,10 @@ public class SaveManager {
 	        {
 				String fileName = getPictureFileName(pictureId);
 	    	    
-				File mediaFile = new File(fileName);  
-	    	    
+				File mediaFile = new File(fileName);
+
 				FileOutputStream fOut = new FileOutputStream(mediaFile);
-	    	    picture.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
+	    	    picture.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
 	    	    fOut.flush();
 	    	    fOut.close(); 
 	    	}
@@ -97,7 +98,7 @@ public class SaveManager {
 		try{
 		    BufferedReader reader = new BufferedReader(new StringReader("<?xml version=\"1.0\"?>\n" + xml));
 		    writer = new BufferedWriter(new FileWriter(getXmlFileName(id), true));
-		
+		    
 		    while ((xml = reader.readLine()) != null) {
 		
 		        writer.write(xml + System.getProperty("line.separator"));
@@ -132,4 +133,47 @@ public class SaveManager {
 //		System.out.println(testphoto2.toString());
 		
 	}
+	
+	
+	public void deleteEntirePictureData(Photo photo){
+		deletePictureInDir(photo);
+		deletePictureMetaDataXml(photo);
+	}
+	
+	private void deletePictureInDir(Photo photo){
+		File file = new File(photoDir + File.separator + "Photo_" + photo.getId() + ".jpg");
+		System.out.println(getPictureFileName(photo.getId()) + " was deleted.");
+		file.delete();	
+	}
+	
+	private void deletePictureMetaDataXml(Photo photo){
+		File file = new File(xmlDir + File.separator + "Photo_" + photo.getId() + ".xml");
+		System.out.println(getXmlFileName(photo.getId()) + " was deleted.");
+		file.delete();
+	}
+	
+	public void deleteAllEntirePictureData(){
+		deleteAllPictureInDir();
+		deleteAllPictureMetaDataXml();
+	}
+	
+	private void deleteAllPictureInDir() {
+			File directory = new File(photoDir);
+			System.out.println(directory);
+			File[] fileList = directory.listFiles();
+			for (File file : fileList) {
+				file.delete();
+			}
+	}
+	
+	private  void deleteAllPictureMetaDataXml() {
+		File directory = new File(xmlDir);
+		System.out.println(directory);
+		File[] fileList = directory.listFiles();
+		for (File file : fileList) {
+			file.delete();
+		}
+	}
+	
+
 }

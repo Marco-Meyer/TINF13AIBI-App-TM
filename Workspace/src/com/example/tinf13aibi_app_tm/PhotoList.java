@@ -1,5 +1,7 @@
 package com.example.tinf13aibi_app_tm;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -7,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -34,6 +37,15 @@ public class PhotoList {
 		adapter.addAll(loadedPhotos);
 	}
 	
+	public void deletePhoto(Photo photo){
+		sm.deleteEntirePictureData(photo);
+		adapter.remove(photo);
+	}
+	
+	public void deleteAllPhotos(){
+		adapter.clear();
+		sm.deleteAllEntirePictureData();
+	}
 	public void setOnClickListener()
 	{
 		this.list.setOnItemClickListener(new OnItemClickListener() {
@@ -49,5 +61,21 @@ public class PhotoList {
 //				Toast.makeText(view.getContext(),"You've got an event" + context,Toast.LENGTH_LONG).show();	
 			}
 	    });
+	}
+	
+	public void setOnLongClickListener(){
+		
+		this.list.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+					Photo currentPhoto = adapter.getItem(position);
+					deletePhoto(currentPhoto);
+					Toast.makeText(view.getContext(),"Photo_" + currentPhoto.getId() + ".jpg deleted.",Toast.LENGTH_SHORT).show();
+					return true;
+			}
+			
+		});
 	}
 }

@@ -61,11 +61,7 @@
 
         <activity
             android:name=".GoogleMapsActivity"
-            android:label="@string/title_activity_google_maps"
-            android:parentActivityName=".ImageActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.tinf13aibi_app_tm.ImageActivity" />
+            android:label="@string/title_activity_google_maps"> 
         </activity>
     </application>
 
