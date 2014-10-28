@@ -4,11 +4,6 @@
     tools:context="com.example.tinf13aibi_app_tm.ImageActivity" >
 
     <item
-        android:id="@+id/sendAsMail"
-        android:icon="@drawable/ic_action_email"
-        android:title="@string/sendAsMail"
-        app:showAsAction="withText"/>
-    <item
         android:id="@+id/showOnMap"
         android:icon="@drawable/ic_action_map"
         android:title="@string/showOnMap"
@@ -18,5 +13,12 @@
         android:icon="@drawable/ic_action_save"
         android:title="@string/saveInLibrary"
         app:showAsAction="withText"/>
+    
+     <item 
+        android:id="@+id/action_share"
+        android:title="@string/action_share"
+        android:icon="@drawable/ic_action_share"
+        android:showAsAction="ifRoom"
+        android:actionProviderClass="android.widget.ShareActionProvider" />
 
 </menu>
