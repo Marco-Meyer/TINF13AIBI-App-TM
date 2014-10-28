@@ -116,7 +116,7 @@ public class SaveManager {
 		}
 	}
 	
-	private String getPictureFileName(String id) {
+	public String getPictureFileName(String id) {
 		return photoDir + File.separator + "Photo_" + id + ".jpg";
 	}
 	
@@ -124,6 +124,10 @@ public class SaveManager {
 		return xmlDir + File.separator +  "Photo_" + id + ".xml";
 	}
 	
+	public String getPhotoDir() {
+		return photoDir;
+	}
+
 	public static void main(String[] args) {
 //		Photo testphoto = new Photo(10, "today", "now", "here");
 //		SaveManager sm = new SaveManager();

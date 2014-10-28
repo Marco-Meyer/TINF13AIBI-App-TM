@@ -2,6 +2,7 @@ package com.example.tinf13aibi_app_tm;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.io.File;
 import java.sql.Time;
 
 import android.support.v7.app.ActionBarActivity;
@@ -12,6 +13,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -141,10 +143,22 @@ public class MainActivity extends ActionBarActivity {
     }
     
     private String[] getDirectories() {
-    	String photoDir = getDir("Photos", Context.MODE_PRIVATE).getAbsolutePath();
-        String xmlDir = getDir("XMLs", Context.MODE_PRIVATE).getAbsolutePath();
-        String[] directories = {photoDir, xmlDir};
+    	
+    	//logik nach sm auslagern!!!einself
+    	//String photoDir = getDir("Photos", Context.MODE_WORLD_READABLE/*I DON'T CARE*/).getAbsolutePath();
+    	File photoDir = new File(Environment.getExternalStorageDirectory() + File.separator + "Photos");
+    	File xmlDir = new File(Environment.getExternalStorageDirectory() + File.separator + "XMLs");
+    	createDirIfNotExist(photoDir);
+    	createDirIfNotExist(xmlDir);
+        //String xmlDir = getDir("XMLs", Context.MODE_WORLD_READABLE).getAbsolutePath();
+        String[] directories = {photoDir.getAbsolutePath(), xmlDir.getAbsolutePath()};
         return directories;
+    }
+    
+    private void createDirIfNotExist(File path) {
+    	if (!path.exists()) {
+    		path.mkdir();
+    	}
     }
 }
     
