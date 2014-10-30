@@ -13,6 +13,7 @@ import java.util.List;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -22,11 +23,12 @@ public class SaveManager {
 	private String xmlDir;
 	private XStream xstream; //xstream is a lib able to convert entire classes to xml and vice versa. Convenient, isn't it?
 	
-	public SaveManager(String[] directories) {
-		this.photoDir = directories[0];
-		this.xmlDir = directories[1];
+	public SaveManager() {
+	//	this.photoDir = directories[0];
+	//	this.xmlDir = directories[1];
 		xstream = new XStream();
 		xstream.alias("Photo", Photo.class);
+		setDirectories();
 	}
 	
 	public void saveEntirePictureData(Photo photo, Bitmap picture) {
@@ -128,16 +130,6 @@ public class SaveManager {
 	public String getPhotoDir() {
 		return photoDir;
 	}
-
-	public static void main(String[] args) {
-//		Photo testphoto = new Photo(10, "today", "now", "here");
-//		SaveManager sm = new SaveManager();
-//		/*sm.savePictureMetaDataInXml(testphoto);*/
-//		Photo testphoto2 = sm.loadPictureMetaDataFromXml(10);
-//		System.out.println(testphoto2.toString());
-		
-	}
-	
 	
 	public void deleteEntirePictureData(Photo photo){
 		deletePictureInDir(photo);
@@ -179,5 +171,18 @@ public class SaveManager {
 		}
 	}
 	
-
+    private void setDirectories() {
+    	File photoFolder = new File(Environment.getExternalStorageDirectory() + File.separator + "Photos");
+    	File xmlFolder = new File(Environment.getExternalStorageDirectory() + File.separator + "XMLs");
+    	createDirIfNotExist(photoFolder);
+    	createDirIfNotExist(xmlFolder);
+    	photoDir = photoFolder.getAbsolutePath();
+    	xmlDir = xmlFolder.getAbsolutePath();
+    }
+    
+    private void createDirIfNotExist(File path) {
+    	if (!path.exists()) {
+    		path.mkdir();
+    	}
+    }
 }

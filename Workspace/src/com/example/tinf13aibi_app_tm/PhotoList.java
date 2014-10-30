@@ -20,11 +20,11 @@ public class PhotoList {
 	private ArrayAdapter<Photo> adapter;
 	private SaveManager sm;
 	
-	public PhotoList(Context context, ListView list, String[] directories) {
+	public PhotoList(Context context, ListView list) {
 		this.list = list;
 		this.adapter = new ArrayAdapter<Photo>(context, android.R.layout.simple_list_item_1);
 		this.list.setAdapter(this.adapter);
-		sm = new SaveManager(directories);
+		sm = new SaveManager();
 	}
 	
 	public void addPhoto(Photo photo, Bitmap picture) {

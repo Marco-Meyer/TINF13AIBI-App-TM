@@ -33,7 +33,7 @@ public class MainActivity extends ActionBarActivity {
         
         setContentView(R.layout.activity_main);
         
-        this.list = new PhotoList(this, (ListView)findViewById(R.id.photo_list), getDirectories());
+        this.list = new PhotoList(this, (ListView)findViewById(R.id.photo_list));
         list.loadOldPhotoData();
         list.setOnClickListener();
         list.setOnLongClickListener();
@@ -154,25 +154,6 @@ public class MainActivity extends ActionBarActivity {
 			}
     		
     	};
-    }
-    
-    private String[] getDirectories() {
-    	
-    	//logik nach sm auslagern!!!einself
-    	//String photoDir = getDir("Photos", Context.MODE_WORLD_READABLE/*I DON'T CARE*/).getAbsolutePath();
-    	File photoDir = new File(Environment.getExternalStorageDirectory() + File.separator + "Photos");
-    	File xmlDir = new File(Environment.getExternalStorageDirectory() + File.separator + "XMLs");
-    	createDirIfNotExist(photoDir);
-    	createDirIfNotExist(xmlDir);
-        //String xmlDir = getDir("XMLs", Context.MODE_WORLD_READABLE).getAbsolutePath();
-        String[] directories = {photoDir.getAbsolutePath(), xmlDir.getAbsolutePath()};
-        return directories;
-    }
-    
-    private void createDirIfNotExist(File path) {
-    	if (!path.exists()) {
-    		path.mkdir();
-    	}
     }
 }
     
