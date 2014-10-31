@@ -6,7 +6,9 @@ import java.io.File;
 import java.sql.Time;
 
 import android.support.v7.app.ActionBarActivity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
@@ -38,7 +40,7 @@ public class MainActivity extends ActionBarActivity {
         list.setOnClickListener();
         list.setOnLongClickListener();
         currentLocation = null;
-        Toast.makeText(this,"No actual GPS coordinates.\nPlease wait...",Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this,"Keine GPS-Koordinaten vorhanden.",Toast.LENGTH_SHORT).show();
         locManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         setLocationListener();
     }
@@ -86,8 +88,24 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
         if (id == R.id.deletePhotos) {
-        	list.deleteAllPhotos();
-        	Toast.makeText(MainActivity.this,"All Photos deleted.",Toast.LENGTH_SHORT).show();
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+			builder.setMessage(R.string.deleteDialogForAll);
+			builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+		           
+				public void onClick(DialogInterface dialog, int id) {
+					list.deleteAllPhotos();
+					Toast.makeText(MainActivity.this,"Alle Bilder gelöscht.",Toast.LENGTH_SHORT).show();
+		        }
+		    });
+			builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+			               // User cancelled the dialog
+			    }
+			 });
+
+			AlertDialog dialog = builder.create();
+			dialog.show();
         	return true;
         }
         return super.onOptionsItemSelected(item);
@@ -107,13 +125,13 @@ public class MainActivity extends ActionBarActivity {
     		        
     				Photo resultPhoto = new Photo(pictureId, currentDate, currentTime,  currentLocation);
     		        list.addPhoto(resultPhoto, picture);
-    		        Toast.makeText(this, "Photo added.", Toast.LENGTH_SHORT).show();
+    		        Toast.makeText(this, "Bild hinzugefügt.", Toast.LENGTH_SHORT).show();
     		        break;
             	case RESULT_CANCELED:
-            		Toast.makeText(this, "Canceled image capture. No photo added.", Toast.LENGTH_SHORT).show();
+            		Toast.makeText(this, "Bildaufnahme wurde abgebrochen.\nKein Bild hinzugefügt.", Toast.LENGTH_SHORT).show();
             		break;
             	default:
-            		Toast.makeText(this, "Error occured. No photo added.", Toast.LENGTH_LONG).show();
+            		Toast.makeText(this, "Ein Fehler ist aufgetreten.\nKein Bild hinzugefügt.", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -136,8 +154,8 @@ public class MainActivity extends ActionBarActivity {
 			@Override
 			public void onLocationChanged(Location location) {
 				currentLocation = location;
-				System.out.println(currentLocation.getLongitude());
-				Toast.makeText(MainActivity.this,"GPS coordinates are available",Toast.LENGTH_SHORT).show();
+//				System.out.println(currentLocation.getLongitude());
+				Toast.makeText(MainActivity.this,"GPS-Koordinaten sind verfügbar.",Toast.LENGTH_SHORT).show();
 			}
 
 			@Override
@@ -155,6 +173,7 @@ public class MainActivity extends ActionBarActivity {
     		
     	};
     }
+    
 }
     
 

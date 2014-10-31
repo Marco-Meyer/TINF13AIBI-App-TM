@@ -53,7 +53,6 @@ public class GoogleMapsActivity extends ActionBarActivity {
 	 @Override
 	 protected void onResume() {
 		 super.onResume();
-		 //setUpMapIfNeeded();
 	 }
 	 
 	@Override
@@ -68,9 +67,30 @@ public class GoogleMapsActivity extends ActionBarActivity {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
+		   switch (item.getItemId()) {
 
-		return super.onOptionsItemSelected(item);
+	        case R.id.satellite:
+	            if (item.isChecked()){ 
+	            	item.setChecked(false);	
+	            }
+	            else{ 
+	            item.setChecked(true);
+	            map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+	            }
+	            return true;
+	        case R.id.map:
+	        	 if (item.isChecked()){ 
+	        		 item.setChecked(false);		
+		            }
+		         else {
+		        	 item.setChecked(true);
+		        	 map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+		         }
+		         return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+
+		   }
+
 	}
-
 }

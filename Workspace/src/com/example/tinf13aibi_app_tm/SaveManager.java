@@ -46,7 +46,7 @@ public class SaveManager {
 			for (File file : fileList) {
 				photoList.add(loadPictureMetaDataFromXml(file));
 			}
-		} catch (Exception e) {System.out.println("Excepion thrown during loading");}	
+		} catch (Exception e) {System.out.println("Während dem Laden ist ein Fehler aufgetreten");}	
 		
 		return photoList;
 	}

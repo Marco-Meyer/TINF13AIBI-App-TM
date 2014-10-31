@@ -33,7 +33,7 @@ public class ImageActivity extends ActionBarActivity {
 		
 		imgView = (ImageView) findViewById(R.id.imageView);
 		this.photoDir = getIntent().getStringExtra("com.example.tinf13aibi_app_tm.picture");
-		Toast.makeText(this, "dir is " + photoDir, Toast.LENGTH_LONG).show();
+		//Toast.makeText(this, "Das Bild liegt unter " + photoDir, Toast.LENGTH_LONG).show();
 		currentPicture = BitmapFactory.decodeFile(photoDir);
 		//currentPicture = (Bitmap) getIntent().getParcelableExtra("com.example.tinf13aibi_app_tm.picture");
 		imgView.setImageBitmap(currentPicture);

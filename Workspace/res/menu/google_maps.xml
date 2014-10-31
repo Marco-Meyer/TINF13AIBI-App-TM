@@ -3,6 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.tinf13aibi_app_tm.GoogleMapsActivity" >
 
-
-
+    <group android:checkableBehavior="single"
+        	android:id="@+id/mapType"
+        	android:title="@string/mapType">
+        <item android:id="@+id/map"
+              android:title="@string/map" />
+        <item android:id="@+id/satellite"
+              android:title="@string/satellite" 
+              android:checked="true"/>
+    </group>
 </menu>
