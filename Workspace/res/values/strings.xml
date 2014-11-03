@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Foto-Verwaltung</string>
+    <string name="app_name">PicOperator</string>
+    <string name="title_main_activity">Übersicht</string>
     <string name="action_settings">Einstellungen</string>
     <string name="takePhoto">Foto aufnehmen</string>
     <string name="title_activity_image">Anzeige</string>
     <string name="showOnMap">Standort anzeigen</string>
     <string name="saveInLibrary">In Bildergalerie speichern</string>
-    <string name="title_activity_google_maps">Standort des Bildes</string>
+    <string name="title_activity_google_maps">Standort</string>
     <string name="deletePhotos">Alle Bilder löschen</string>
     <string name="action_share">Dieses Bild teilen</string>
     
