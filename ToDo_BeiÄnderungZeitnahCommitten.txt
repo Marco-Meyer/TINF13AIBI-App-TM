@@ -16,6 +16,7 @@ Done
 
 zurückgestellt:
 
+* Title beim veröffentlichen in der Bibliothek entsprechend der Konvention setzen (voller dateiname)
 * Neuinitialisierung der App verhindern beim Rotieren des Geräts (evtl nicht notwendig?)
 * Programmrobustheit: Was passiert bei fehlerhaften xml?
 	* Option anfügen, dass lokale Daten gelöscht werden.
