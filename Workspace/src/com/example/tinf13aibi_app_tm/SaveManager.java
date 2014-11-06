@@ -3,7 +3,6 @@ package com.example.tinf13aibi_app_tm;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
@@ -15,6 +14,7 @@ import android.os.Environment;
 import com.thoughtworks.xstream.XStream;
 
 public class SaveManager {
+	private static final String PICTURE_PREFIX = "Photo_";
 	private String photoDir;
 	private String xmlDir;
 	private XStream xstream;
@@ -26,10 +26,8 @@ public class SaveManager {
 	}
 	
 	public void saveEntirePictureData(Photo photo) {
-//		savePictureInDir(photo.getId(), picture);
 		savePictureMetaDataInXml(photo);
 	}
-	
 
 	public List<Photo> loadEntirePictureData() {
 		File directory = new File(xmlDir);
@@ -44,27 +42,7 @@ public class SaveManager {
 		return photoList;
 	}
 	
-	private void savePictureInDir(String pictureId, Bitmap picture) {
-		try{
-		
-	    	if(picture != null)
-	        {
-				String fileName = getPictureFileName(pictureId);
-	    	    
-				File mediaFile = new File(fileName);
-
-				FileOutputStream fOut = new FileOutputStream(mediaFile);
-	    	    picture.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
-	    	    fOut.flush();
-	    	    fOut.close(); 
-	    	}
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-	    }
-	}
-	
-	public Bitmap loadPictureWithId(String pictureId) {
+	public Bitmap loadPictureWithId(Long pictureId) {
 		Bitmap result = null;
 		try {
 			BitmapFactory.Options options = new BitmapFactory.Options();
@@ -76,19 +54,60 @@ public class SaveManager {
 		return result;
 	}
 	
+	public long getUniqueId() {
+    	File xmlFolder = new File(xmlDir);
+    	long result = 0;
+    	if (xmlFolder.listFiles().length > 0) {
+    		
+    		long highestId = 0;
+    		long currentFileId;
+    		try {
+	    		for (String fileName: xmlFolder.list()) {
+	    			
+	    			currentFileId = Long.parseLong(fileName.substring(PICTURE_PREFIX.length(), fileName.indexOf(".", PICTURE_PREFIX.length())));
+	    			System.out.println(currentFileId);
+	    			if (highestId < currentFileId) {
+	    				highestId = currentFileId;
+	    			}
+	    		}
+	    		result = highestId + 1;
+    		} catch (NumberFormatException e) {
+    			e.printStackTrace();
+    		}
+    	}
+    	
+    	return result;
+    }
 	
+	public String getNewPictureFileName() {
+		return getPictureFileName(getUniqueId());
+	}
 	
-	private  void savePictureMetaDataInXml(Photo photo) {
+	public String getPictureFileName(long id) {
+		return photoDir + File.separator + PICTURE_PREFIX + id + ".jpg";
+	}
+	
+	public void deleteEntirePictureData(Photo photo){
+		deletePictureInDir(photo);
+		deletePictureMetaDataXml(photo);
+	}
+	
+	public void deleteAllPictureData(){
+		deleteAllPictureInDir();
+		deleteAllPictureMetaDataXml();
+	}
+	
+	private Photo loadPictureMetaDataFromXml(File file) {
+		return (Photo) xstream.fromXML(file); 
+	}
+	
+	private void savePictureMetaDataInXml(Photo photo) {
 		 String xml = xstream.toXML(photo);
 		 System.out.println(xml);
 		 writeXmlToFile(photo.getId(), xml);
 	}
 	
-	public Photo loadPictureMetaDataFromXml(File file) {
-		return (Photo) xstream.fromXML(file); 
-	}
-	
-	private void writeXmlToFile(String id, String xml) {
+	private void writeXmlToFile(long id, String xml) {
 		BufferedWriter writer = null;
 		try{
 		    BufferedReader reader = new BufferedReader(new StringReader("<?xml version=\"1.0\"?>\n" + xml));
@@ -112,21 +131,8 @@ public class SaveManager {
 		}
 	}
 	
-	public String getPictureFileName(String id) {
-		return photoDir + File.separator + "Photo_" + id + ".jpg";
-	}
-	
-	private String getXmlFileName(String id) {
-		return xmlDir + File.separator +  "Photo_" + id + ".xml";
-	}
-	
-	public String getPhotoDir() {
-		return photoDir;
-	}
-	
-	public void deleteEntirePictureData(Photo photo){
-		deletePictureInDir(photo);
-		deletePictureMetaDataXml(photo);
+	private String getXmlFileName(long id) {
+		return xmlDir + File.separator +  PICTURE_PREFIX + id + ".xml";
 	}
 	
 	private void deletePictureInDir(Photo photo){
@@ -139,11 +145,6 @@ public class SaveManager {
 		File file = new File(xmlDir + File.separator + "Photo_" + photo.getId() + ".xml");
 		System.out.println(getXmlFileName(photo.getId()) + " was deleted.");
 		file.delete();
-	}
-	
-	public void deleteAllEntirePictureData(){
-		deleteAllPictureInDir();
-		deleteAllPictureMetaDataXml();
 	}
 	
 	private void deleteAllPictureInDir() {

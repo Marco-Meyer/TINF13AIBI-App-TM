@@ -5,7 +5,6 @@ import java.io.File;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -20,18 +19,18 @@ public class ImageActivity extends ActionBarActivity {
 	private ImageView imgView;
 	private Bitmap currentPicture;
 	private ShareActionProvider shareActionProvider;
-	private String photoDir;
+	private SaveManager sm;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_image);
-
+		
+		sm = new SaveManager();
 		this.photo = (Photo) getIntent().getSerializableExtra("com.example.tinf13aibi_app_tm.photo");
 		
 		imgView = (ImageView) findViewById(R.id.imageView);
-		this.photoDir = getIntent().getStringExtra("com.example.tinf13aibi_app_tm.picture");
-		currentPicture = BitmapFactory.decodeFile(photoDir);
+		currentPicture = sm.loadPictureWithId(photo.getId());
 		imgView.setImageBitmap(currentPicture);
 	}
 
@@ -68,7 +67,7 @@ public class ImageActivity extends ActionBarActivity {
 	private Intent getShareIntent() {
 		Intent shareIntent = new Intent(Intent.ACTION_SEND);
 		shareIntent.setType("image/jpeg");
-		File file = new File(photoDir);
+		File file = new File(sm.getPictureFileName(photo.getId()));
 		shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
 		shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -88,7 +87,7 @@ public class ImageActivity extends ActionBarActivity {
 	}
 	
 	private void savePictureInLibrary() {
-		MediaStore.Images.Media.insertImage(getContentResolver(), currentPicture, photo.getId() , "");
+		MediaStore.Images.Media.insertImage(getContentResolver(), currentPicture, String.valueOf(photo.getId()) , "");
 		Toast.makeText(this, "Bild in Bildergalerie gespeichert.", Toast.LENGTH_SHORT).show()	;
 	}
 }

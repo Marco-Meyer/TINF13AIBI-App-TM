@@ -9,21 +9,21 @@ import android.location.Location;
 public class Photo implements Serializable{
 
 	private static final long serialVersionUID = -7561336969818481142L;
-	private String id;
+	private long id;
 	private Date date;
 	private Time time;
 	private double latitude;
 	private double longitude;
 	
 	public Photo() {
-		this.id = "";
+		this.id = 0;
 		this.date = new Date();
 		this.time = new Time(0);
 		this.latitude = 0.0;
 		this.longitude = 0.0;
 	}
 	
-	public Photo(String id, Date date, Time time, Location location) {
+	public Photo(long id, Date date, Time time, Location location) {
 		this.id = id;
 		this.date = date;
 		this.time = time;
@@ -31,7 +31,7 @@ public class Photo implements Serializable{
 		setLongitude(location);
 	}
 
-	public String getId() {
+	public long getId() {
 		return id;
 	}
 

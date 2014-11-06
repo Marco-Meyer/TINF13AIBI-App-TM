@@ -1,6 +1,5 @@
 package com.example.tinf13aibi_app_tm;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.io.File;
 import java.sql.Time;
@@ -15,7 +14,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -28,19 +26,16 @@ public class MainActivity extends ActionBarActivity {
 	private LocationManager locManager;
 	private LocationListener locListener;
 	private Location currentLocation;
-	private String photoDir;
-	private Date currentDate;
-	private Time currentTime;
-	private String pictureId;
 	private Uri fileUri;
+	private SaveManager sm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
         setContentView(R.layout.activity_main);
         
         this.photoList = new PhotoList(this, (ListView)findViewById(R.id.photo_list));
+        sm = new SaveManager();
         photoList.loadOldPhotoData();
         photoList.setOnClickListener();
         photoList.setOnLongClickListener();
@@ -117,11 +112,10 @@ public class MainActivity extends ActionBarActivity {
             		if(data==null){
 //            		Bitmap picture = (Bitmap) data.getExtras().get("data");
    		    	 
-//    		    	Date currentDate = new Date();
-//    		    	Time currentTime = new Time(currentDate.getTime()); 
-//    				String pictureId = new SimpleDateFormat("yyyyMMdd_HHmmss").format(currentDate);
+    		    	Date currentDate = new Date();
+    		    	Time currentTime = new Time(currentDate.getTime()); 
     		        
-    				Photo resultPhoto = new Photo(pictureId, currentDate, currentTime,  currentLocation);
+    				Photo resultPhoto = new Photo(sm.getUniqueId(), currentDate, currentTime,  currentLocation);
     		        photoList.addPhoto(resultPhoto);
 
     		        Toast.makeText(this, "Bild hinzugefügt.", Toast.LENGTH_SHORT).show();
@@ -179,25 +173,7 @@ public class MainActivity extends ActionBarActivity {
   }
 
   public File getOutputMediaFile(){
-
-
-    	File photoFolder = new File(Environment.getExternalStorageDirectory() + File.separator + "Photos");
-
-    	if (!photoFolder.exists()) {
-    		photoFolder.mkdir();
-    	}
-  
-    	photoDir = photoFolder.getAbsolutePath();
-
-
-      currentDate = new Date();
-      System.out.println(currentDate);
-  	  currentTime = new Time(currentDate.getTime()); 
-	  pictureId = new SimpleDateFormat("yyyyMMdd_HHmmss").format(currentDate);
-      
-      File mediaFile = new File(photoDir + File.separator +
-          "Photo_"+ pictureId + ".jpg");
-      return mediaFile;
+	  	return	new File(sm.getNewPictureFileName());
   }
     
     

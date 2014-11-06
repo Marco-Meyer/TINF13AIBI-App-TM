@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -44,7 +43,7 @@ public class PhotoList extends FragmentActivity {
 	
 	public void deleteAllPhotos(){
 		adapter.clear();
-		sm.deleteAllEntirePictureData();
+		sm.deleteAllPictureData();
 	}
 	public void setOnClickListener()
 	{
@@ -56,7 +55,6 @@ public class PhotoList extends FragmentActivity {
 				Photo currentPhoto = adapter.getItem(position);
 				Intent intent = new Intent(view.getContext(), ImageActivity.class);
 				intent.putExtra("com.example.tinf13aibi_app_tm.photo" , currentPhoto);
-				intent.putExtra("com.example.tinf13aibi_app_tm.picture", sm.getPictureFileName(currentPhoto.getId()));
 				view.getContext().startActivity(intent);
 			}
 	    });
