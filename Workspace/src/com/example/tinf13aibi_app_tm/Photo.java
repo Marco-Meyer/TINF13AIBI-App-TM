@@ -8,6 +8,7 @@ import android.location.Location;
 
 public class Photo implements Serializable{
 
+	private static final long serialVersionUID = -7561336969818481142L;
 	private String id;
 	private Date date;
 	private Time time;
@@ -66,10 +67,7 @@ public class Photo implements Serializable{
 
 	@Override
 	public String toString() {
-		
 		return "Photo_" + id  + ".jpg \n" +
 			   "Date: " + getDate();
-
-
 	}
 }

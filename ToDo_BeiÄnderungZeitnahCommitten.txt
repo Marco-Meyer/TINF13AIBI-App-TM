@@ -1,9 +1,8 @@
 Todo:
+* Doku
+* Refactoring: GoogleMapsActivity (Code in ein paar Funktionen auslagern)
+* Speichern des Bildes: Bildqualität sicherstellen
 
-* imageactivity: E-Mail mit aktuellem Photo versenden
-
-* Programmrobustheit: Was passiert bei fehlerhaften xml?
-	* Option anfügen, dass lokale Daten gelöscht werden.
 
 
 Done
@@ -12,11 +11,16 @@ Done
 * Imageactivity: Photodaten übergeben + Photo anzeigen MMy
 * imageactivity: Bild in der Bibliothek speichern
 * imageactivity: Position auf Map anzeigen	
-
+* imageactivity: E-Mail mit aktuellem Photo versenden
+* löschen der bilder ermöglichen
 
 zurückgestellt:
 
 * Neuinitialisierung der App verhindern beim Rotieren des Geräts (evtl nicht notwendig?)
-* imageactivity: löschen des aktuellen bildes ermöglichen
+* Programmrobustheit: Was passiert bei fehlerhaften xml?
+	* Option anfügen, dass lokale Daten gelöscht werden.
+
+rejected:
+
 * Beim Speichern Namensvergabe des Bildes ermöglichen (sinnvoll?)
 	* Prüflogik um doppelte Namen zu vermeiden.
