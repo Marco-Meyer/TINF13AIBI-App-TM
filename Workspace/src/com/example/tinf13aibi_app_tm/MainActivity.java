@@ -2,12 +2,10 @@ package com.example.tinf13aibi_app_tm;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.io.File;
 import java.sql.Time;
 
 import android.support.v7.app.ActionBarActivity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,7 +13,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -24,7 +21,7 @@ import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
-	private PhotoList list;
+	private PhotoList photoList;
 	private LocationManager locManager;
 	private LocationListener locListener;
 	private Location currentLocation;
@@ -35,12 +32,11 @@ public class MainActivity extends ActionBarActivity {
         
         setContentView(R.layout.activity_main);
         
-        this.list = new PhotoList(this, (ListView)findViewById(R.id.photo_list));
-        list.loadOldPhotoData();
-        list.setOnClickListener();
-        list.setOnLongClickListener();
+        this.photoList = new PhotoList(this, (ListView)findViewById(R.id.photo_list));
+        photoList.loadOldPhotoData();
+        photoList.setOnClickListener();
+        photoList.setOnLongClickListener();
         currentLocation = null;
-//        Toast.makeText(this,"Keine GPS-Koordinaten vorhanden.",Toast.LENGTH_SHORT).show();
         locManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         setLocationListener();
     }
@@ -62,25 +58,14 @@ public class MainActivity extends ActionBarActivity {
 		locManager.removeUpdates(locListener);
 	}
 	
-//	@Override
-//	protected void onStop() {
-//		super.onStop();
-//		locManager.removeUpdates(locListener);
-//	}
-
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
-        //return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.takePhoto) {
         	Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
@@ -94,7 +79,7 @@ public class MainActivity extends ActionBarActivity {
 			builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 		           
 				public void onClick(DialogInterface dialog, int id) {
-					list.deleteAllPhotos();
+					photoList.deleteAllPhotos();
 					Toast.makeText(MainActivity.this,"Alle Bilder gelöscht.",Toast.LENGTH_SHORT).show();
 		        }
 		    });
@@ -121,10 +106,9 @@ public class MainActivity extends ActionBarActivity {
     		    	Date currentDate = new Date();
     		    	Time currentTime = new Time(currentDate.getTime()); 
     				String pictureId = new SimpleDateFormat("yyyyMMdd_HHmmss").format(currentDate);
-    				//currentLocation = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
     		        
     				Photo resultPhoto = new Photo(pictureId, currentDate, currentTime,  currentLocation);
-    		        list.addPhoto(resultPhoto, picture);
+    		        photoList.addPhoto(resultPhoto, picture);
     		        Toast.makeText(this, "Bild hinzugefügt.", Toast.LENGTH_SHORT).show();
     		        break;
             	case RESULT_CANCELED:
@@ -154,7 +138,6 @@ public class MainActivity extends ActionBarActivity {
 			@Override
 			public void onLocationChanged(Location location) {
 				currentLocation = location;
-//				System.out.println(currentLocation.getLongitude());
 				Toast.makeText(MainActivity.this,"GPS-Koordinaten sind verfügbar.",Toast.LENGTH_SHORT).show();
 			}
 
@@ -170,7 +153,6 @@ public class MainActivity extends ActionBarActivity {
 			@Override
 			public void onProviderDisabled(String provider) {
 			}
-    		
     	};
     }
     
