@@ -1,11 +1,7 @@
 package com.example.tinf13aibi_app_tm;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
-
 import android.app.AlertDialog;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -95,7 +91,6 @@ public class PhotoList extends FragmentActivity {
 					dialog.show();
 					return true;
 			}
-			
 		});
 	}
 }
