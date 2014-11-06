@@ -33,9 +33,9 @@ public class ImageActivity extends ActionBarActivity {
 		
 		imgView = (ImageView) findViewById(R.id.imageView);
 		this.photoDir = getIntent().getStringExtra("com.example.tinf13aibi_app_tm.picture");
-		//Toast.makeText(this, "Das Bild liegt unter " + photoDir, Toast.LENGTH_LONG).show();
+//		Toast.makeText(this, "Das Bild liegt unter " + photoDir, Toast.LENGTH_LONG).show();
 		currentPicture = BitmapFactory.decodeFile(photoDir);
-		//currentPicture = (Bitmap) getIntent().getParcelableExtra("com.example.tinf13aibi_app_tm.picture");
+//		currentPicture = (Bitmap) getIntent().getParcelableExtra("com.example.tinf13aibi_app_tm.picture");
 		imgView.setImageBitmap(currentPicture);
 	}
 
@@ -69,7 +69,7 @@ public class ImageActivity extends ActionBarActivity {
 			
 			if(photo.getLongitude() == 0.0 && photo.getLatitude() == 0.0)
 			{
-				Toast.makeText(ImageActivity.this,"No Location registered.",Toast.LENGTH_SHORT).show();
+				Toast.makeText(ImageActivity.this,"Kein Standort verfügbar.",Toast.LENGTH_SHORT).show();
 			}else
 			{
 				Intent intent = new Intent(ImageActivity.this,GoogleMapsActivity.class);
@@ -81,8 +81,8 @@ public class ImageActivity extends ActionBarActivity {
 			return true;
 		}
 		if (id == R.id.saveInLibrary) {
-			MediaStore.Images.Media.insertImage(getContentResolver(), currentPicture, photo.getId() , "");
-			Toast.makeText(this, "Picture saved to gallery", Toast.LENGTH_SHORT).show()	;
+			MediaStore.Images.Media.insertImage(getContentResolver(), currentPicture,"Photo_" + photo.getId() + ".jpg"  , "");
+			Toast.makeText(this, "In Bildergalerie gespeichert", Toast.LENGTH_SHORT).show()	;
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

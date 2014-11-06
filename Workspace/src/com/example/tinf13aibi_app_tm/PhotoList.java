@@ -31,9 +31,9 @@ public class PhotoList extends FragmentActivity {
 		sm = new SaveManager();
 	}
 	
-	public void addPhoto(Photo photo, Bitmap picture) {
+	public void addPhoto(Photo photo) {
 		adapter.add(photo);
-		sm.saveEntirePictureData(photo, picture);
+		sm.saveEntirePictureData(photo);
 	}
 	
 	public void loadOldPhotoData() {
@@ -77,6 +77,7 @@ public class PhotoList extends FragmentActivity {
 					final Photo currentPhoto = adapter.getItem(position);
 					AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
 
+					builder.setTitle(R.string.deleteDialogTitle);
 					builder.setMessage(R.string.deleteDialogForOne);
 					builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 				           

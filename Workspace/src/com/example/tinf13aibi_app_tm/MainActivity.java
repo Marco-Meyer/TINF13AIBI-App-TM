@@ -14,6 +14,7 @@ import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
@@ -28,6 +29,12 @@ public class MainActivity extends ActionBarActivity {
 	private LocationManager locManager;
 	private LocationListener locListener;
 	private Location currentLocation;
+	private String photoDir;
+	private Date currentDate;
+	private Time currentTime;
+	private String pictureId;
+//	private static String xmlDir;
+	private Uri fileUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,12 +91,15 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
         if (id == R.id.takePhoto) {
         	Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        	fileUri = getOutputMediaFileUri(); 
+        	intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, fileUri);
         	startActivityForResult(intent,CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
             return true;
         }
         if (id == R.id.deletePhotos) {
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+			builder.setTitle(R.string.deleteDialogTitle);
 			builder.setMessage(R.string.deleteDialogForAll);
 			builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 		           
@@ -114,19 +124,25 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+        	
             switch (resultCode) {
             	case RESULT_OK:
-            		Bitmap picture = (Bitmap) data.getExtras().get("data");
-   		    	 
-    		    	Date currentDate = new Date();
-    		    	Time currentTime = new Time(currentDate.getTime()); 
-    				String pictureId = new SimpleDateFormat("yyyyMMdd_HHmmss").format(currentDate);
-    				//currentLocation = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-    		        
+            		if(data==null){
+//            		Bitmap picture = (Bitmap) data.getExtras().get("data");
+//   		    	 
+//            		 Toast.makeText(this, "Image saved to:\n" +
+//                             data.getData(), Toast.LENGTH_LONG).show();
+//
+//    		    	Date currentDate = new Date();
+//    		    	Time currentTime = new Time(currentDate.getTime()); 
+//    				String pictureId = new SimpleDateFormat("yyyyMMdd_HHmmss").format(currentDate);
+//    				//currentLocation = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//    		        
     				Photo resultPhoto = new Photo(pictureId, currentDate, currentTime,  currentLocation);
-    		        list.addPhoto(resultPhoto, picture);
+    		        list.addPhoto(resultPhoto);
     		        Toast.makeText(this, "Bild hinzugefügt.", Toast.LENGTH_SHORT).show();
     		        break;
+    		        }
             	case RESULT_CANCELED:
             		Toast.makeText(this, "Bildaufnahme wurde abgebrochen.\nKein Bild hinzugefügt.", Toast.LENGTH_SHORT).show();
             		break;
@@ -134,6 +150,7 @@ public class MainActivity extends ActionBarActivity {
             		Toast.makeText(this, "Ein Fehler ist aufgetreten.\nKein Bild hinzugefügt.", Toast.LENGTH_LONG).show();
             }
         }
+        
     }
     
     private boolean locationProviderExists() {
@@ -173,6 +190,36 @@ public class MainActivity extends ActionBarActivity {
     		
     	};
     }
+    
+    
+  public Uri getOutputMediaFileUri(){
+        return Uri.fromFile(getOutputMediaFile());
+  }
+
+  public File getOutputMediaFile(){
+
+
+    	File photoFolder = new File(Environment.getExternalStorageDirectory() + File.separator + "Photos");
+
+    	if (!photoFolder.exists()) {
+    		photoFolder.mkdir();
+    	}
+  
+    	photoDir = photoFolder.getAbsolutePath();
+
+
+      currentDate = new Date();
+      System.out.println(currentDate);
+  	  currentTime = new Time(currentDate.getTime()); 
+	  pictureId = new SimpleDateFormat("yyyyMMdd_HHmmss").format(currentDate);
+      
+      File mediaFile = new File(photoDir + File.separator +
+          "Photo_"+ pictureId + ".jpg");
+      return mediaFile;
+  }
+    
+    
+    
     
 }
     

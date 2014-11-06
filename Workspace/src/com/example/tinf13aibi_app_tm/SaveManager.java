@@ -31,8 +31,8 @@ public class SaveManager {
 		setDirectories();
 	}
 	
-	public void saveEntirePictureData(Photo photo, Bitmap picture) {
-		savePictureInDir(photo.getId(), picture);
+	public void saveEntirePictureData(Photo photo) {
+//		savePictureInDir(photo.getId(), picture);
 		savePictureMetaDataInXml(photo);
 	}
 	
