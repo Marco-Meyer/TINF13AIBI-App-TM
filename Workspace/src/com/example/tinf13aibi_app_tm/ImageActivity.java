@@ -2,8 +2,6 @@ package com.example.tinf13aibi_app_tm;
 
 import java.io.File;
 
-import android.support.v4.view.MenuCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -33,23 +31,17 @@ public class ImageActivity extends ActionBarActivity {
 		
 		imgView = (ImageView) findViewById(R.id.imageView);
 		this.photoDir = getIntent().getStringExtra("com.example.tinf13aibi_app_tm.picture");
-		//Toast.makeText(this, "Das Bild liegt unter " + photoDir, Toast.LENGTH_LONG).show();
 		currentPicture = BitmapFactory.decodeFile(photoDir);
-		//currentPicture = (Bitmap) getIntent().getParcelableExtra("com.example.tinf13aibi_app_tm.picture");
 		imgView.setImageBitmap(currentPicture);
 	}
 
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.image, menu);
 		 
 		MenuItem menuItem = menu.findItem(R.id.action_share);
 		shareActionProvider = new ShareActionProvider(getApplicationContext());
-		//shareActionProvider = (ShareActionProvider) menuItem.getActionProvider();
-	    //shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
-	    //MenuItemCompat.setActionProvider(menuItem, shareActionProvider);
 		menuItem.setActionProvider(shareActionProvider);
 	    shareActionProvider.setShareIntent(getShareIntent());
 
@@ -58,31 +50,16 @@ public class ImageActivity extends ActionBarActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_share) {
 			return true;
 		}
 		if (id == R.id.showOnMap) {
-			
-			if(photo.getLongitude() == 0.0 && photo.getLatitude() == 0.0)
-			{
-				Toast.makeText(ImageActivity.this,"No Location registered.",Toast.LENGTH_SHORT).show();
-			}else
-			{
-				Intent intent = new Intent(ImageActivity.this,GoogleMapsActivity.class);
-				intent.putExtra("com.example.tinf13aibi_app_tm.photoLongitude",photo.getLongitude());
-				intent.putExtra("com.example.tinf13aibi_app_tm.photoLatitude",photo.getLatitude());
-				intent.putExtra("com.example.tinf13aibi_app_tm.photoId" , photo.getId());
-				startActivity(intent);
-			}
+			showMap();
 			return true;
 		}
 		if (id == R.id.saveInLibrary) {
-			MediaStore.Images.Media.insertImage(getContentResolver(), currentPicture, photo.getId() , "");
-			Toast.makeText(this, "Picture saved to gallery", Toast.LENGTH_SHORT).show()	;
+			savePictureInLibrary();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -96,5 +73,22 @@ public class ImageActivity extends ActionBarActivity {
 		shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 		return shareIntent;
+	}
+
+	private void showMap() {
+		if(photo.getLongitude() == 0.0 && photo.getLatitude() == 0.0) {
+			Toast.makeText(ImageActivity.this,"No Location registered.", Toast.LENGTH_SHORT).show();
+		} else {
+			Intent intent = new Intent(ImageActivity.this,GoogleMapsActivity.class);
+			intent.putExtra("com.example.tinf13aibi_app_tm.photoLongitude",photo.getLongitude());
+			intent.putExtra("com.example.tinf13aibi_app_tm.photoLatitude",photo.getLatitude());
+			intent.putExtra("com.example.tinf13aibi_app_tm.photoId" , photo.getId());
+			startActivity(intent);
+		}
+	}
+	
+	private void savePictureInLibrary() {
+		MediaStore.Images.Media.insertImage(getContentResolver(), currentPicture, photo.getId() , "");
+		Toast.makeText(this, "Picture saved to gallery", Toast.LENGTH_SHORT).show()	;
 	}
 }
