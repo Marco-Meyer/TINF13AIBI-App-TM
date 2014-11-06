@@ -3,29 +3,23 @@ package com.example.tinf13aibi_app_tm;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
-
 import com.thoughtworks.xstream.XStream;
 
 public class SaveManager {
-	//fixed location we want to save our xml-files / pictures. Might a bit too inflexible..
 	private String photoDir;
 	private String xmlDir;
-	private XStream xstream; //xstream is a lib able to convert entire classes to xml and vice versa. Convenient, isn't it?
+	private XStream xstream;
 	
 	public SaveManager() {
-	//	this.photoDir = directories[0];
-	//	this.xmlDir = directories[1];
 		xstream = new XStream();
 		xstream.alias("Photo", Photo.class);
 		setDirectories();
@@ -38,7 +32,6 @@ public class SaveManager {
 	
 
 	public List<Photo> loadEntirePictureData() {
-		// what happens with broken xml-files? we may need a delete-routine here..somewhere.
 		File directory = new File(xmlDir);
 		File[] fileList = directory.listFiles();
 		ArrayList<Photo> photoList = new ArrayList<Photo>();
