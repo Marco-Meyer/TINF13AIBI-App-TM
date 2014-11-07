@@ -15,7 +15,7 @@
     <string name="map">Karte</string>
     <string name="satellite">Satellit</string>
 
-    <string name="deleteDialogTitle">Löschen?</string>
+    <string name="deleteDialogTitle">Löschen</string>
     <string name="deleteDialogForOne">Dieses Bild wird gelöscht</string>
     <string name="deleteDialogForAll">Alle Bilder werden gelöscht</string>
     <string name="ok">Löschen</string>

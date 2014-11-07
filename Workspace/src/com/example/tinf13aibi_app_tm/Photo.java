@@ -68,6 +68,6 @@ public class Photo implements Serializable{
 	@Override
 	public String toString() {
 		return "Photo_" + id  + ".jpg \n" +
-			   "Date: " + getDate();
+			   "Datum: " + getDate();
 	}
 }

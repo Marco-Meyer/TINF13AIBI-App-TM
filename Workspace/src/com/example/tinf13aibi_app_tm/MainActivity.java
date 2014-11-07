@@ -27,6 +27,7 @@ public class MainActivity extends ActionBarActivity {
 	private LocationListener locListener;
 	private Location currentLocation;
 	private SaveManager sm;
+	int counter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,23 +43,6 @@ public class MainActivity extends ActionBarActivity {
         locManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         setLocationListener();
     }
-    
-    @Override
-	protected void onStart() {
-		super.onStart();
-		if (locationProviderExists()) {
-			locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locListener);
-		}else
-		{
-			locManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, locListener);
-		}
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		locManager.removeUpdates(locListener);
-	}
 	
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -70,9 +54,10 @@ public class MainActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.takePhoto) {
-        	Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        	Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);     	
         	intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, getOutputMediaFileUri());
         	startActivityForResult(intent,CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+        	startRequestLocationUpdates();
             return true;
         }
         if (id == R.id.deletePhotos) {
@@ -84,8 +69,9 @@ public class MainActivity extends ActionBarActivity {
     }
     
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {    	
+    	locManager.removeUpdates(locListener);
+    	if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
         	
             switch (resultCode) {
             	case RESULT_OK:
@@ -101,7 +87,7 @@ public class MainActivity extends ActionBarActivity {
     		        }
             		break;
             	case RESULT_CANCELED:
-            		Toast.makeText(this, "Bildaufnahme wurde abgebrochen.\nKein Bild hinzugefügt.", Toast.LENGTH_SHORT).show();
+            		Toast.makeText(this,"Kein Bild hinzugefügt.", Toast.LENGTH_SHORT).show();
             		break;
             	default:
             		Toast.makeText(this, "Ein Fehler ist aufgetreten.\nKein Bild hinzugefügt.", Toast.LENGTH_LONG).show();
@@ -128,7 +114,10 @@ public class MainActivity extends ActionBarActivity {
 			@Override
 			public void onLocationChanged(Location location) {
 				currentLocation = location;
+				if(counter==0){
 				Toast.makeText(MainActivity.this,"GPS-Koordinaten sind verfügbar.",Toast.LENGTH_SHORT).show();
+				counter=1;
+				}
 			}
 
 			@Override
@@ -168,6 +157,17 @@ public class MainActivity extends ActionBarActivity {
 	  return builder;
   }
       
+    
+    
+  public void startRequestLocationUpdates(){
+  	if (locationProviderExists()) {
+			locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locListener);
+		}else
+		{
+			locManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, locListener);
+		} 
+  }   
+    
 }
     
 

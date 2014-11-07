@@ -76,18 +76,20 @@ public class ImageActivity extends ActionBarActivity {
 
 	private void showMap() {
 		if(photo.getLongitude() == 0.0 && photo.getLatitude() == 0.0) {
-			Toast.makeText(ImageActivity.this,"Kein Standort verfügbar.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(ImageActivity.this,"Kein Standort verfügbar", Toast.LENGTH_SHORT).show();
 		} else {
+			Toast.makeText(ImageActivity.this,"Karte wird geladen", Toast.LENGTH_SHORT).show();
 			Intent intent = new Intent(ImageActivity.this,GoogleMapsActivity.class);
 			intent.putExtra("com.example.tinf13aibi_app_tm.photoLongitude",photo.getLongitude());
 			intent.putExtra("com.example.tinf13aibi_app_tm.photoLatitude",photo.getLatitude());
-			intent.putExtra("com.example.tinf13aibi_app_tm.photoId" , photo.getId());
+			intent.putExtra("com.example.tinf13aibi_app_tm.photoId" , String.valueOf(photo.getId()));
+			intent.putExtra("com.example.tinf13aibi_app_tm.photoDate" , String.valueOf(photo.getDate()));
 			startActivity(intent);
 		}
 	}
 	
 	private void savePictureInLibrary() {
 		MediaStore.Images.Media.insertImage(getContentResolver(), currentPicture, String.valueOf(photo.getId()) , "");
-		Toast.makeText(this, "Bild in Bildergalerie gespeichert.", Toast.LENGTH_SHORT).show()	;
+		Toast.makeText(this, "In Bildergalerie gespeichert.", Toast.LENGTH_SHORT).show();
 	}
 }
