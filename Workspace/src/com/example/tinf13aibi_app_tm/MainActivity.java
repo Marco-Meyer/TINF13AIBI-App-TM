@@ -26,7 +26,6 @@ public class MainActivity extends ActionBarActivity {
 	private LocationManager locManager;
 	private LocationListener locListener;
 	private Location currentLocation;
-	private Uri fileUri;
 	private SaveManager sm;
 
     @Override
@@ -72,30 +71,12 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
         if (id == R.id.takePhoto) {
         	Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        	fileUri = getOutputMediaFileUri(); 
-        	intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, fileUri);
+        	intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, getOutputMediaFileUri());
         	startActivityForResult(intent,CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
             return true;
         }
         if (id == R.id.deletePhotos) {
-
-			AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-			builder.setTitle(R.string.deleteDialogTitle);
-			builder.setMessage(R.string.deleteDialogForAll);
-			builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-		           
-				public void onClick(DialogInterface dialog, int id) {
-					photoList.deleteAllPhotos();
-					Toast.makeText(MainActivity.this,"Alle Bilder gelöscht.",Toast.LENGTH_SHORT).show();
-		        }
-		    });
-			builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-			               // User cancelled the dialog
-			    }
-			 });
-
-			AlertDialog dialog = builder.create();
+			AlertDialog dialog = getDeleteFilesDialogBuilder().create();
 			dialog.show();
         	return true;
         }
@@ -110,17 +91,15 @@ public class MainActivity extends ActionBarActivity {
             	case RESULT_OK:
 
             		if(data==null){
-//            		Bitmap picture = (Bitmap) data.getExtras().get("data");
-   		    	 
-    		    	Date currentDate = new Date();
-    		    	Time currentTime = new Time(currentDate.getTime()); 
-    		        
-    				Photo resultPhoto = new Photo(sm.getUniqueId(), currentDate, currentTime,  currentLocation);
-    		        photoList.addPhoto(resultPhoto);
-
-    		        Toast.makeText(this, "Bild hinzugefügt.", Toast.LENGTH_SHORT).show();
-    		        break;
+            			Date currentDate = new Date();
+	    		    	Time currentTime = new Time(currentDate.getTime()); 
+	    		        
+	    				Photo resultPhoto = new Photo(sm.getUniqueId(), currentDate, currentTime,  currentLocation);
+	    		        photoList.addPhoto(resultPhoto);
+	
+	    		        Toast.makeText(this, "Bild hinzugefügt.", Toast.LENGTH_SHORT).show();
     		        }
+            		break;
             	case RESULT_CANCELED:
             		Toast.makeText(this, "Bildaufnahme wurde abgebrochen.\nKein Bild hinzugefügt.", Toast.LENGTH_SHORT).show();
             		break;
@@ -169,16 +148,26 @@ public class MainActivity extends ActionBarActivity {
     
     
   public Uri getOutputMediaFileUri(){
-        return Uri.fromFile(getOutputMediaFile());
-  }
-
-  public File getOutputMediaFile(){
-	  	return	new File(sm.getNewPictureFileName());
+        return Uri.fromFile(new File(sm.getNewPictureFileName()));
   }
     
-    
-    
-    
+  private AlertDialog.Builder getDeleteFilesDialogBuilder() {
+	  AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+	  builder.setTitle(R.string.deleteDialogTitle);
+	  builder.setMessage(R.string.deleteDialogForAll);
+	  builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+	         
+		  public void onClick(DialogInterface dialog, int id) {
+			  photoList.deleteAllPhotos();
+			  Toast.makeText(MainActivity.this,"Alle Bilder gelöscht.",Toast.LENGTH_SHORT).show();
+		  }
+	  });
+	  builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+		  public void onClick(DialogInterface dialog, int id) {}
+	  });
+	  return builder;
+  }
+      
 }
     
 
