@@ -22,6 +22,7 @@ public class GoogleMapsActivity extends ActionBarActivity {
 	private double longitude;
 	private double latitude;
 	private String pictureId;
+	private String pictureDate;
 
 	
 	@Override
@@ -36,11 +37,6 @@ public class GoogleMapsActivity extends ActionBarActivity {
 		map.animateCamera(CameraUpdateFactory.newCameraPosition(getCameraPosition()));
 	}
 
-	 @Override
-	 protected void onResume() {
-		 super.onResume();
-	 }
-	 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.google_maps, menu);
@@ -78,6 +74,7 @@ public class GoogleMapsActivity extends ActionBarActivity {
 		this.longitude = (double)getIntent().getDoubleExtra("com.example.tinf13aibi_app_tm.photoLongitude", 0.0);
 		this.latitude = (double)getIntent().getDoubleExtra("com.example.tinf13aibi_app_tm.photoLatitude", 0.0);
 		this.pictureId = (String)getIntent().getStringExtra("com.example.tinf13aibi_app_tm.photoId");
+		this.pictureDate = (String)getIntent().getStringExtra("com.example.tinf13aibi_app_tm.photoDate");
 	}
 	
 	private void createMap() {
@@ -87,7 +84,9 @@ public class GoogleMapsActivity extends ActionBarActivity {
 		map.setMyLocationEnabled(true);
 		map.addMarker(new MarkerOptions()
          .position(new LatLng(latitude, longitude))
-         .title("Photo_"+ pictureId + ".jpg"));
+         .title("Photo_" + pictureId + ".jpg")
+         .snippet(pictureDate));
+		
 	}
 	
 	private CameraPosition getCameraPosition() {
