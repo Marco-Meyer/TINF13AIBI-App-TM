@@ -8,12 +8,12 @@
         android:id="@+id/takePhoto"
         android:icon="@drawable/ic_action_camera"
         android:title="@string/takePhoto"
-        app:showAsAction="withText"/>
+        app:showAsAction="ifRoom"/>
     
      <item
 	     android:id="@+id/deletePhotos"
-	     android:icon="@drawable/ic_action_cancel"
+	     android:icon="@drawable/ic_action_discard"
 	     android:title="@string/deletePhotos"
-	     app:showAsAction="withText"/>
+	     app:showAsAction="ifRoom"/>
 
 </menu>

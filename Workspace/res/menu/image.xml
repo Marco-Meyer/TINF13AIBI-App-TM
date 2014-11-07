@@ -5,20 +5,20 @@
 
     <item
         android:id="@+id/showOnMap"
-        android:icon="@drawable/ic_action_map"
+        android:icon="@drawable/ic_action_place"
         android:title="@string/showOnMap"
-        app:showAsAction="withText"/>
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/saveInLibrary"
-        android:icon="@drawable/ic_action_save"
+        android:icon="@drawable/ic_action_new_picture"
         android:title="@string/saveInLibrary"
-        app:showAsAction="withText"/>
+        app:showAsAction="ifRoom"/>
     
      <item 
         android:id="@+id/action_share"
         android:title="@string/action_share"
         android:icon="@drawable/ic_action_share"
-        android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
         android:actionProviderClass="android.widget.ShareActionProvider" />
 
 </menu>
