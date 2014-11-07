@@ -3,7 +3,6 @@
 
     <string name="app_name">PicOperator</string>
     <string name="title_main_activity">Übersicht</string>
-    <string name="action_settings">Einstellungen</string>
     <string name="takePhoto">Foto aufnehmen</string>
     <string name="title_activity_image">Anzeige</string>
     <string name="showOnMap">Standort anzeigen</string>
