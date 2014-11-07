@@ -27,7 +27,7 @@ public class MainActivity extends ActionBarActivity {
 	private LocationListener locListener;
 	private Location currentLocation;
 	private SaveManager sm;
-	int counter;
+	boolean locationChanged;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,7 @@ public class MainActivity extends ActionBarActivity {
         currentLocation = null;
         locManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         setLocationListener();
+        locationChanged = false;
     }
 	
 	@Override
@@ -114,9 +115,9 @@ public class MainActivity extends ActionBarActivity {
 			@Override
 			public void onLocationChanged(Location location) {
 				currentLocation = location;
-				if(counter==0){
-				Toast.makeText(MainActivity.this,"GPS-Koordinaten sind verfügbar.",Toast.LENGTH_SHORT).show();
-				counter=1;
+				if(!locationChanged){
+					Toast.makeText(MainActivity.this,"GPS-Koordinaten sind verfügbar.",Toast.LENGTH_SHORT).show();
+					locationChanged = true;
 				}
 			}
 
@@ -134,7 +135,6 @@ public class MainActivity extends ActionBarActivity {
 			}
     	};
     }
-    
     
   public Uri getOutputMediaFileUri(){
         return Uri.fromFile(new File(sm.getNewPictureFileName()));
@@ -156,8 +156,6 @@ public class MainActivity extends ActionBarActivity {
 	  });
 	  return builder;
   }
-      
-    
     
   public void startRequestLocationUpdates(){
   	if (locationProviderExists()) {
