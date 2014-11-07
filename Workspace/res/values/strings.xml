@@ -21,5 +21,6 @@
     <string name="deleteDialogForAll">Alle Bilder werden gelöscht</string>
     <string name="ok">Löschen</string>
     <string name="cancel">Abbruch</string>
+    <string name="image_description">Ausgewähltes Bild</string>
 
 </resources>

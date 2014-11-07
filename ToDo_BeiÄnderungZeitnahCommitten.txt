@@ -1,7 +1,7 @@
 Todo:
 * Doku
 * Refactoring: GoogleMapsActivity (Code in ein paar Funktionen auslagern)
-* Speichern des Bildes: Bildqualität sicherstellen
+* Samsung: Bild wird fälschlicherweise gedreht.
 
 
 
@@ -13,6 +13,7 @@ Done
 * imageactivity: Position auf Map anzeigen	
 * imageactivity: E-Mail mit aktuellem Photo versenden
 * löschen der bilder ermöglichen
+* Speichern des Bildes: Bildqualität sicherstellen
 
 zurückgestellt:
 

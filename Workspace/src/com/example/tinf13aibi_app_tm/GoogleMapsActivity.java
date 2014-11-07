@@ -29,25 +29,11 @@ public class GoogleMapsActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_google_maps);
 		
-		this.longitude = (double)getIntent().getDoubleExtra("com.example.tinf13aibi_app_tm.photoLongitude", 0.0);
-		this.latitude = (double)getIntent().getDoubleExtra("com.example.tinf13aibi_app_tm.photoLatitude", 0.0);
-		this.pictureId = (String)getIntent().getStringExtra("com.example.tinf13aibi_app_tm.photoId");
+		getIntentData();
 				 
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		final SupportMapFragment mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map);
-		map = mapFragment.getMap();
-		map.setMyLocationEnabled(true);
-		map.addMarker(new MarkerOptions()
-         .position(new LatLng(latitude, longitude))
-         .title("Photo_"+ pictureId + ".jpg"));
-		
-		CameraPosition cameraPosition = new CameraPosition.Builder()
-	    .target(new LatLng(latitude, longitude))
-	    .zoom(10)
-	    .build();                   
-		map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
-
+		createMap();
+		                   
+		map.animateCamera(CameraUpdateFactory.newCameraPosition(getCameraPosition()));
 	}
 
 	 @Override
@@ -57,16 +43,12 @@ public class GoogleMapsActivity extends ActionBarActivity {
 	 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.google_maps, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		   switch (item.getItemId()) {
 
 	        case R.id.satellite:
@@ -89,8 +71,30 @@ public class GoogleMapsActivity extends ActionBarActivity {
 		         return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
-
 		   }
-
+	}
+	
+	private void getIntentData() {
+		this.longitude = (double)getIntent().getDoubleExtra("com.example.tinf13aibi_app_tm.photoLongitude", 0.0);
+		this.latitude = (double)getIntent().getDoubleExtra("com.example.tinf13aibi_app_tm.photoLatitude", 0.0);
+		this.pictureId = (String)getIntent().getStringExtra("com.example.tinf13aibi_app_tm.photoId");
+	}
+	
+	private void createMap() {
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		final SupportMapFragment mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map);
+		map = mapFragment.getMap();
+		map.setMyLocationEnabled(true);
+		map.addMarker(new MarkerOptions()
+         .position(new LatLng(latitude, longitude))
+         .title("Photo_"+ pictureId + ".jpg"));
+	}
+	
+	private CameraPosition getCameraPosition() {
+		CameraPosition cameraPosition = new CameraPosition.Builder()
+	    .target(new LatLng(latitude, longitude))
+	    .zoom(10)
+	    .build();
+		return cameraPosition;
 	}
 }
