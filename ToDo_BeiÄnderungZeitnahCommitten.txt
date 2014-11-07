@@ -1,6 +1,5 @@
 Todo:
 * Doku
-* Refactoring: GoogleMapsActivity (Code in ein paar Funktionen auslagern)
 * Samsung: Bild wird fälschlicherweise gedreht.
 
 
@@ -14,6 +13,7 @@ Done
 * imageactivity: E-Mail mit aktuellem Photo versenden
 * löschen der bilder ermöglichen
 * Speichern des Bildes: Bildqualität sicherstellen
+* Refactoring: GoogleMapsActivity (Code in ein paar Funktionen auslagern)
 
 zurückgestellt:
 
