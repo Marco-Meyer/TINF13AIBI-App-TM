@@ -47,6 +47,7 @@ public class MainActivity extends ActionBarActivity {
 	
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -71,12 +72,9 @@ public class MainActivity extends ActionBarActivity {
     
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {    	
-    	locManager.removeUpdates(locListener);
     	if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-        	
-            switch (resultCode) {
-            	case RESULT_OK:
-
+    		switch (resultCode) {
+            	case RESULT_OK:;
             		if(data==null){
             			Date currentDate = new Date();
 	    		    	Time currentTime = new Time(currentDate.getTime()); 
@@ -94,7 +92,7 @@ public class MainActivity extends ActionBarActivity {
             		Toast.makeText(this, "Ein Fehler ist aufgetreten.\nKein Bild hinzugefügt.", Toast.LENGTH_LONG).show();
             }
         }
-        
+    	locManager.removeUpdates(locListener);
     }
     
     private boolean locationProviderExists() {

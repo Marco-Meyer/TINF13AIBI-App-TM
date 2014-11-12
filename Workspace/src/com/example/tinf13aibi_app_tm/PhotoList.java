@@ -69,27 +69,30 @@ public class PhotoList extends FragmentActivity {
 					int position, long id) {
 
 					final Photo currentPhoto = adapter.getItem(position);
-					AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-
-					builder.setTitle(R.string.deleteDialogTitle);
-					builder.setMessage(R.string.deleteDialogForOne);
-					builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-				           
-						public void onClick(DialogInterface dialog, int id) {
-				               deletePhoto(currentPhoto);
-				               Toast.makeText(view.getContext(),"Bild gelöscht.",Toast.LENGTH_SHORT).show();
-				        }
-				    });
-					builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
-					               // User cancelled the dialog
-					    }
-					});
-
-					AlertDialog dialog = builder.create();
-					dialog.show();
+					
+					AlertDialog dialog = getDeleteFileDialogBuilder(view, currentPhoto).create();
+					dialog.show();			
 					return true;
 			}
 		});
 	}
+	
+	 private AlertDialog.Builder getDeleteFileDialogBuilder(final View view, final Photo photo) {
+		  AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+		  builder.setTitle(R.string.deleteDialogTitle);
+		  builder.setMessage(R.string.deleteDialogForOne);
+		  builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+		         
+			  public void onClick(DialogInterface dialog, int id) {
+				  deletePhoto(photo);
+				  Toast.makeText(view.getContext(),"Bild gelöscht.",Toast.LENGTH_SHORT).show();
+			  }
+		  });
+		  builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+			               // User cancelled the dialog
+			    }
+			});
+		  return builder;
+	  }
 }

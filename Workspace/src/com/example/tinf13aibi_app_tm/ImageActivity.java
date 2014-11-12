@@ -37,6 +37,7 @@ public class ImageActivity extends ActionBarActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
 		getMenuInflater().inflate(R.menu.image, menu);
 		 
 		MenuItem menuItem = menu.findItem(R.id.action_share);

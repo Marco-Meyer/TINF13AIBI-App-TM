@@ -39,6 +39,7 @@ public class GoogleMapsActivity extends ActionBarActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
 		getMenuInflater().inflate(R.menu.google_maps, menu);
 		return true;
 	}
